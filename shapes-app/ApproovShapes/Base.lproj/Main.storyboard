@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ios_swift_shapes_demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approov Shapes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jy-NN-rYT">
+                                <rect key="frame" x="121.66666666666669" y="44" width="171" height="28.666666666666671"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="85S-h2-0sv" userLabel="StatusView">
+                                <rect key="frame" x="20" y="291" width="374" height="314.33333333333326"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="approov" translatesAutoresizingMaskIntoConstraints="NO" id="8f9-fO-seo" userLabel="StatusImage">
+                                        <rect key="frame" x="50" y="0.0" width="274" height="274"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="8f9-fO-seo" secondAttribute="height" multiplier="1:1" id="deh-k3-X2L"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Hello to start..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vn-z4-ioz" userLabel="StatusText">
+                                        <rect key="frame" x="0.0" y="294" width="374" height="20.333333333333314"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="7vn-z4-ioz" secondAttribute="trailing" id="3Gv-bR-Z0n"/>
+                                    <constraint firstAttribute="bottom" secondItem="7vn-z4-ioz" secondAttribute="bottom" id="Gam-iv-0ue"/>
+                                    <constraint firstItem="8f9-fO-seo" firstAttribute="leading" secondItem="85S-h2-0sv" secondAttribute="leading" constant="50" id="JHB-5H-bvk"/>
+                                    <constraint firstItem="7vn-z4-ioz" firstAttribute="top" secondItem="8f9-fO-seo" secondAttribute="bottom" constant="20" id="Uhq-1H-OpM"/>
+                                    <constraint firstItem="7vn-z4-ioz" firstAttribute="leading" secondItem="85S-h2-0sv" secondAttribute="leading" id="WH0-le-e6q"/>
+                                    <constraint firstItem="8f9-fO-seo" firstAttribute="top" secondItem="85S-h2-0sv" secondAttribute="top" id="oPi-bi-1l6"/>
+                                    <constraint firstAttribute="trailing" secondItem="8f9-fO-seo" secondAttribute="trailing" constant="50" id="w3t-hK-TH7"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="JAa-Du-Rh1">
+                                <rect key="frame" x="0.0" y="818" width="414" height="34"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSD-8g-nYX" userLabel="HelloButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Hello"/>
+                                        <connections>
+                                            <action selector="checkHello" destination="BYZ-38-t0r" eventType="touchUpInside" id="i4h-7t-SKq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rku-L7-IVF" userLabel="ShapeButton">
+                                        <rect key="frame" x="207" y="0.0" width="207" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Shape"/>
+                                        <connections>
+                                            <action selector="checkShape" destination="BYZ-38-t0r" eventType="touchUpInside" id="YDl-gB-4la"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Rku-L7-IVF" firstAttribute="width" secondItem="PSD-8g-nYX" secondAttribute="width" id="BQ2-Cd-DRF"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JAa-Du-Rh1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2XC-Mv-csi"/>
+                            <constraint firstItem="6jy-NN-rYT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6s4-bO-ftI"/>
+                            <constraint firstItem="85S-h2-0sv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7TE-JW-JuS"/>
+                            <constraint firstItem="6jy-NN-rYT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="D1Y-Sa-Tn4"/>
+                            <constraint firstAttribute="trailing" secondItem="JAa-Du-Rh1" secondAttribute="trailing" id="I9i-Qv-JQh"/>
+                            <constraint firstItem="85S-h2-0sv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mwh-WH-sLw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="85S-h2-0sv" secondAttribute="trailing" constant="20" id="Vho-cV-NhC"/>
+                            <constraint firstItem="85S-h2-0sv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dGd-VK-ttH"/>
+                            <constraint firstItem="JAa-Du-Rh1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="f1W-ld-hDS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JAa-Du-Rh1" secondAttribute="bottom" constant="10" id="iD5-fS-Zf0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="statusImageView" destination="8f9-fO-seo" id="WfP-mR-0YE"/>
+                        <outlet property="statusTextView" destination="7vn-z4-ioz" id="0eb-gu-txF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="49.275362318840585" y="26.116071428571427"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="approov" width="350" height="225"/>
+    </resources>
+</document>
