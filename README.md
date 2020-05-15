@@ -3,7 +3,7 @@
 This quickstart is written specifically for native iOS apps that are written in Swift for making the API calls that you wish to protect with Approov. If this is not your situation then check if there is a more relevant quickstart guide available.
 
 ## WHAT YOU WILL NEED
-* Access to either a demo or trial Approov account
+* Access to either the demo account ([request access here](https://info.approov.io/demo-token)) or a trial/paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with environment variable `APPROOV_MANAGEMENT_TOKEN` set with your account access token
 * [Xcode](https://developer.apple.com/xcode/) version 11 installed (version 11.3.1 is used in this guide)
 * The contents of the folder containing this README
@@ -154,7 +154,7 @@ If you still don't get a valid shape then there are some things you can try. Rem
 
 * Ensure that the version of the app you are running is exactly the one you registered with Approov.
 * If you running the app from a debugger then valid tokens are not issued.
-* Look at the [`syslog`](https://developer.apple.com/documentation/os/logging) output from the device. Information about any Approov token fetched or an error is printed, e.g. `Approov: example, ios.swift.shapes.demo.approov.io, 2.2.3(4289), LXW8hGuB5KCfMHkr9cfGyw==`. You can easily [check](https://approov.io/docs/latest/approov-usage-documentation/#loggable-tokens) the validity.
+* Look at the [`syslog`](https://developer.apple.com/documentation/os/logging) output from the device. Information about any Approov token fetched or an error is printed, e.g. `Approov: Approov token for host: https://approov.io : {"anno":["debug","allow-debug"],"did":"/Ja+kMUIrmd0wc+qECR0rQ==","exp":1589484841,"ip":"2a01:4b00:f42d:2200:e16f:f767:bc0a:a73c","sip":"YM8iTv"}`. You can easily [check](https://approov.io/docs/latest/approov-usage-documentation/#loggable-tokens) the validity.
 
 If you have a trial (as opposed to demo) account you have some additional options:
 * Consider using an [Annotation Policy](https://approov.io/docs/latest/approov-usage-documentation/#annotation-policies) during development to directly see why the device is not being issued with a valid token.
@@ -174,7 +174,7 @@ Remember you need to [add](https://approov.io/docs/latest/approov-usage-document
 An Approov app automatically downloads any new configurations of APIs and their pins that are available. These are stored in the [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults) for the app in a preference key `approov-dynamic`. You can store the preferences differently by modifying or overriding the methods `storeDynamicConfig` and `readDynamicApproovConfig` in `ApproovURLSession.swift`.
 
 ### Changing Your API Backend
-The Shapes example app uses the API endpoint `https://shapes.approov.io/v2/shapes` hosted on Approov's servers. If you want to integrate Approov into your own app you will need to [integrate](https://approov.io/docs/latest/approov-usage-documentation/#backend-integration) an Approov token check. Since the Approov token is simply a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) this is usually straightforward. [Backend integration](https://approov.io/docs/latest/approov-integration-examples/backend-api/) examples provide a detailed walk-through for particular languages. Note that the default header name of `Approov-Token` can be changed by editing function `fetchApproovToken`. 
+The Shapes example app uses the API endpoint `https://shapes.approov.io/v2/shapes` hosted on Approov's servers. If you want to integrate Approov into your own app you will need to [integrate](https://approov.io/docs/latest/approov-usage-documentation/#backend-integration) an Approov token check. Since the Approov token is simply a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) this is usually straightforward. [Backend integration](https://approov.io/docs/latest/approov-integration-examples/backend-api/) examples provide a detailed walk-through for particular languages. Note that the default header name of `Approov-Token` can be modified by changing the variable `approovTokenPrefix`, i.e. in integrations that need to be prefixed with `Bearer`, like the `Authorization` header. It is also possible to change the `Approov-Token` header completely by overriding the contents of `kApproovTokenHeader` variable. 
 
 ### Token Prefetching
 If you wish to reduce the latency associated with fetching the first Approov token, then a call to `ApproovSDK.prefetchApproovToken` can be made immediately after initialization of the Approov SDK. This initiates the process of fetching an Approov token as a background task, so that a cached token is available immediately when subsequently needed, or at least the fetch time is reduced. Note that if this feature is being used with [Token Binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) then the binding must be set prior to the prefetch, as changes to the binding invalidate any cached Approov token.

@@ -28,7 +28,7 @@ fileprivate struct ApproovData {
     var request:URLRequest
     var decision:ApproovTokenNetworkFetchDecision
     var sdkMessage:String
-    var error:NSError?
+    var error:Error?
 }
 
 public class ApproovURLSession: NSObject {
@@ -561,11 +561,16 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
             approovURLDelegate?.urlSession?(session, didReceive: challenge, completionHandler: completionHandler)
             return
         }
-        if let serverTrust = shouldAcceptAuthenticationChallenge(challenge: challenge){
-            completionHandler(.useCredential,
-                              URLCredential.init(trust: serverTrust));
-            approovURLDelegate?.urlSession?(session, didReceive: challenge, completionHandler: completionHandler)
-            return
+        do {
+            if let serverTrust = try shouldAcceptAuthenticationChallenge(challenge: challenge){
+                completionHandler(.useCredential,
+                                  URLCredential.init(trust: serverTrust));
+                approovURLDelegate?.urlSession?(session, didReceive: challenge, completionHandler: completionHandler)
+                return
+            }
+        } catch {
+            NSLog("Approov: %@", error.localizedDescription)
+            completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
         }
         completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
     }
@@ -587,11 +592,16 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
                 delegate.urlSession?(session, task: task, didReceive: challenge, completionHandler: completionHandler)
                 return
             }
-            if let serverTrust = shouldAcceptAuthenticationChallenge(challenge: challenge){
-                completionHandler(.useCredential,
-                                  URLCredential.init(trust: serverTrust));
-                delegate.urlSession?(session, task: task, didReceive: challenge, completionHandler: completionHandler)
-                return
+            do {
+                if let serverTrust = try shouldAcceptAuthenticationChallenge(challenge: challenge){
+                    completionHandler(.useCredential,
+                                      URLCredential.init(trust: serverTrust));
+                    delegate.urlSession?(session, task: task, didReceive: challenge, completionHandler: completionHandler)
+                    return
+                }
+            } catch {
+                NSLog("Approov: %@", error.localizedDescription)
+                completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
             }
             
             completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
@@ -759,7 +769,7 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
      *  @param  challenge: URLAuthenticationChallenge
      *  @return SecTrust?: valid SecTrust if authentication should proceed, nil otherwise
      */
-    func shouldAcceptAuthenticationChallenge(challenge: URLAuthenticationChallenge) -> SecTrust? {
+    func shouldAcceptAuthenticationChallenge(challenge: URLAuthenticationChallenge) throws -> SecTrust? {
         // Check we have a server trust
         guard let serverTrust = challenge.protectionSpace.serverTrust else {
             return nil
@@ -778,7 +788,8 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
         
         // get the subject public key info from the certificate
         guard let publicKeyInfo = publicKeyInfoOfCertificate(certificate: serverCert) else {
-            return nil
+            /* Throw to indicate we could not parse SPKI header */
+            throw ApproovError.runtimeError(message: "Error parsing SPKI header for host \(challenge.protectionSpace.host) Unsupported certificate type, SPKI header cannot be created")
         }
         
         // compute the SHA-256 hash of the public key info and base64 encode the result
@@ -791,14 +802,11 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
         }
         // Get the receivers host
         let host = challenge.protectionSpace.host
-        // Normalize host name
-        if let normalizedHost = hostFromURLString(urlHost: host) {
-            if let certHashList = approovCertHashes[normalizedHost] {
-                // We have on or more cert hashes matching the receivers host, compare them
-                for certHash in certHashList {
-                    if publicKeyHashBase64 == certHash {
-                        return serverTrust
-                    }
+        if let certHashList = approovCertHashes[host] {
+            // We have on or more cert hashes matching the receivers host, compare them
+            for certHash in certHashList {
+                if publicKeyHashBase64 == certHash {
+                    return serverTrust
                 }
             }
         }
@@ -872,31 +880,6 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
         }
         return Data(hash)
     }
-    
-    /* Extract the hostname from a given string
-     *
-     */
-    func hostFromURLString(urlHost: String) -> String? {
-        // try and create the URL from the string
-        if let url = URL(string: urlHost) {
-            // check that if there is a scheme, then it must be https
-            if ((url.scheme != nil) && (url.path.count != 0) && (url.scheme?.lowercased() != "https")){
-                return nil
-            }
-            // ensure the base URL contains a scheme, assuming 'https' if not specified
-            var schemeFixedBaseURLString = String()
-            if !url.absoluteString.contains("://"){
-                schemeFixedBaseURLString.append("https://")
-            }
-            schemeFixedBaseURLString.append(url.absoluteString)
-            // partition into components and only provide the host
-            if let baseURLComponents = URLComponents(string: schemeFixedBaseURLString) {
-                return baseURLComponents.host ?? nil
-            }
-        }
-        return nil
-    }
-    
 }// class
 
 
@@ -907,6 +890,10 @@ class ApproovSDK {
     public static let kApproovInitialKey = "approov-initial"
     /* Initial configuration file extention for Approov SDK */
     public static let kConfigFileExtension = "config"
+    /* Approov token default header */
+    private static let kApproovTokenHeader = "Approov-Token"
+    /* Approov token custom prefix: any prefix to be added such as "Bearer " */
+    private static var approovTokenPrefix = ""
     /* Private initializer */
     fileprivate init(){}
     /* Status of Approov SDK initialisation */
@@ -1040,13 +1027,15 @@ class ApproovSDK {
                 Approov.setDataHashInToken(aValue)
             } else {
                 // We fail since required binding header is missing
-                let error = NSError(domain: "", code: 1003, userInfo: [NSLocalizedDescriptionKey: "Approov missing token binding header \(ApproovSDK.bindHeader)"])
+                let error = ApproovError.runtimeError(message: "Approov: Approov SDK missing token binding header \(ApproovSDK.bindHeader)")
                 returnData.error = error
                 return returnData
             }
         }
         // Invoke fetch token sync
         let approovResult = Approov.fetchTokenAndWait(request.url!.absoluteString)
+        // Log result of token fetch
+        NSLog("Approov: Approov token for host: %@ : %@", request.url!.absoluteString, approovResult.loggableToken())
         if approovResult.isConfigChanged {
             // Store dynamic config file if a change has occurred
             if let newConfig = Approov.fetchConfig() {
@@ -1056,29 +1045,44 @@ class ApproovSDK {
         // Update the message
         returnData.sdkMessage = Approov.string(from: approovResult.status)
         switch approovResult.status {
-            case ApproovTokenFetchStatus.success,
-                 ApproovTokenFetchStatus.noApproovService:
+            case ApproovTokenFetchStatus.success:
                 // Can go ahead and make the API call with the provided request object
                 returnData.decision = .ShouldProceed
                 // Set Approov-Token header
-                returnData.request.setValue(approovResult.token, forHTTPHeaderField: "Approov-Token")
+                returnData.request.setValue(ApproovSDK.approovTokenPrefix + approovResult.token, forHTTPHeaderField: ApproovSDK.kApproovTokenHeader)
             case ApproovTokenFetchStatus.noNetwork,
                  ApproovTokenFetchStatus.poorNetwork,
                  ApproovTokenFetchStatus.mitmDetected:
                  // Must not proceed with network request and inform user a retry is needed
                 returnData.decision = .ShouldRetry
-                let error = NSError(domain: "", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Retry: " + returnData.sdkMessage])
+                let error = ApproovError.runtimeError(message: returnData.sdkMessage)
                 returnData.error = error
             case ApproovTokenFetchStatus.unprotectedURL,
-                 ApproovTokenFetchStatus.unknownURL:
+                 ApproovTokenFetchStatus.unknownURL,
+                 ApproovTokenFetchStatus.noApproovService:
                 // We do NOT add the Approov-Token header to the request headers
                 returnData.decision = .ShouldProceed
             default:
-                let error = NSError(domain: "", code: 1002, userInfo: [NSLocalizedDescriptionKey: returnData.sdkMessage])
+                let error = ApproovError.runtimeError(message: returnData.sdkMessage)
                 returnData.error = error
                 returnData.decision = .ShouldFail
         }// switch
         
         return returnData
+    }
+}
+
+/*
+ *  Approov error conditions
+ */
+public enum ApproovError: Error {
+    case initializationFailure(message: String)
+    case configurationFailure(message: String)
+    case runtimeError(message: String)
+    var localizedDescription: String? {
+        switch self {
+        case let .initializationFailure(message), let .configurationFailure(message) , let .runtimeError(message):
+            return message
+        }
     }
 }
