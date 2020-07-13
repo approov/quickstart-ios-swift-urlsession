@@ -770,7 +770,7 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
      *  @return SecTrust?: valid SecTrust if authentication should proceed, nil otherwise
      */
     func shouldAcceptAuthenticationChallenge(challenge: URLAuthenticationChallenge) throws -> SecTrust? {
-        // Check we have a server trust
+        // Check we have a server trust, ignore any other challenges
         guard let serverTrust = challenge.protectionSpace.serverTrust else {
             return nil
         }
@@ -778,38 +778,46 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
         // Check the validity of the server cert
         var trustType = SecTrustResultType.invalid
         if (SecTrustEvaluate(serverTrust, &trustType) != errSecSuccess) {
-            return nil
+            throw ApproovError.runtimeError(message: "Error during Certificate Trust Evaluation for host \(challenge.protectionSpace.host)")
+        } else if (trustType != SecTrustResultType.proceed) {
+            throw ApproovError.runtimeError(message: "Error: Certificate Trust Evaluation failure for host \(challenge.protectionSpace.host)")
         }
-        
-        // get the leaf certificate
-        guard let serverCert = SecTrustGetCertificateAtIndex(serverTrust, 0) else {
-            return nil
-        }
-        
-        // get the subject public key info from the certificate
-        guard let publicKeyInfo = publicKeyInfoOfCertificate(certificate: serverCert) else {
-            /* Throw to indicate we could not parse SPKI header */
-            throw ApproovError.runtimeError(message: "Error parsing SPKI header for host \(challenge.protectionSpace.host) Unsupported certificate type, SPKI header cannot be created")
-        }
-        
-        // compute the SHA-256 hash of the public key info and base64 encode the result
-        let publicKeyHash = sha256(data: publicKeyInfo)
-        let publicKeyHashBase64 = String(data:publicKeyHash.base64EncodedData(), encoding: .utf8)
-        
-        // check that the hash is the same as at least one of the pins
-        guard let approovCertHashes = Approov.getPins("public-key-sha256") else {
-            return nil
-        }
-        // Get the receivers host
-        let host = challenge.protectionSpace.host
-        if let certHashList = approovCertHashes[host] {
-            // We have on or more cert hashes matching the receivers host, compare them
-            for certHash in certHashList {
-                if publicKeyHashBase64 == certHash {
-                    return serverTrust
+        // Get the certificate chain count
+        let certCountInChain = SecTrustGetCertificateCount(serverTrust);
+        var indexCurrentCert = 0;
+        while(indexCurrentCert < certCountInChain){
+            // get the current certificate from the chain
+            guard let serverCert = SecTrustGetCertificateAtIndex(serverTrust, indexCurrentCert) else {
+                throw ApproovError.runtimeError(message: "Error getting certificate at index \(indexCurrentCert) from chain for host \(challenge.protectionSpace.host)")
+            }
+            
+            // get the subject public key info from the certificate
+            guard let publicKeyInfo = publicKeyInfoOfCertificate(certificate: serverCert) else {
+                /* Throw to indicate we could not parse SPKI header */
+                throw ApproovError.runtimeError(message: "Error parsing SPKI header for host \(challenge.protectionSpace.host) Unsupported certificate type, SPKI header cannot be created")
+            }
+            
+            // compute the SHA-256 hash of the public key info and base64 encode the result
+            let publicKeyHash = sha256(data: publicKeyInfo)
+            let publicKeyHashBase64 = String(data:publicKeyHash.base64EncodedData(), encoding: .utf8)
+            
+            // check that the hash is the same as at least one of the pins
+            guard let approovCertHashes = Approov.getPins("public-key-sha256") else {
+                throw ApproovError.runtimeError(message: "Approov SDK getPins() call failed")
+            }
+            // Get the receivers host
+            let host = challenge.protectionSpace.host
+            if let certHashList = approovCertHashes[host] {
+                // We have on or more cert hashes matching the receivers host, compare them
+                for certHash in certHashList {
+                    if publicKeyHashBase64 == certHash {
+                        return serverTrust
+                    }
                 }
             }
+            indexCurrentCert += 1
         }
+        // We return nil if no match in current set of pins from Approov SDK and certificate chain seen during TLS handshake
         return nil
     }
     /*
@@ -1086,3 +1094,5 @@ public enum ApproovError: Error {
         }
     }
 }
+
+
