@@ -570,7 +570,6 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
             }
         } catch {
             NSLog("Approov: %@", error.localizedDescription)
-            completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
         }
         completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
     }
@@ -601,7 +600,6 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
                 }
             } catch {
                 NSLog("Approov: %@", error.localizedDescription)
-                completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
             }
             
             completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
@@ -779,7 +777,7 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
         var trustType = SecTrustResultType.invalid
         if (SecTrustEvaluate(serverTrust, &trustType) != errSecSuccess) {
             throw ApproovError.runtimeError(message: "Error during Certificate Trust Evaluation for host \(challenge.protectionSpace.host)")
-        } else if (trustType != SecTrustResultType.proceed) {
+        } else if (trustType != SecTrustResultType.proceed) && (trustType != SecTrustResultType.unspecified) {
             throw ApproovError.runtimeError(message: "Error: Certificate Trust Evaluation failure for host \(challenge.protectionSpace.host)")
         }
         // Get the certificate chain count
