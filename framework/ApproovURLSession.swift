@@ -569,7 +569,7 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
                 return
             }
         } catch {
-            NSLog("Approov: %@", error.localizedDescription)
+            NSLog("Approov: \(error)")
         }
         completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
     }
@@ -599,7 +599,7 @@ class ApproovURLSessionDataDelegate: NSObject, URLSessionDelegate, URLSessionTas
                     return
                 }
             } catch {
-                NSLog("Approov: %@", error.localizedDescription)
+                NSLog("Approov: \(error)")
             }
             
             completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
@@ -1092,5 +1092,6 @@ public enum ApproovError: Error {
         }
     }
 }
+
 
 
