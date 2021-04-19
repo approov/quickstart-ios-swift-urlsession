@@ -43,32 +43,26 @@ This checks the connectivity by connecting to the endpoint `https://shapes.appro
 
 This contacts `https://shapes.approov.io/v2/shapes` to get the name of a random shape. It gets the status code 400 (`Bad Request`) because this endpoint is protected with an Approov token. Next, you will add Approov into the app so that it can generate valid Approov tokens and get shapes.
 
-## ADD THE APPROOV SDK
+## ADD THE APPROOV SDK AND THE APPROOV SERVICE URLSESSION
 
-Get the latest Approov SDK (if you are using Windows then substitute `approov` with `approov.exe` in all cases in this quickstart)
+Get the latest Approov SDK by using `CocoaPods`. The `Podfile` configuration file is located in the `shapes-app/ApproovShapes` directory and should contain a reference to the latest version of the Approov SDK available for iOS and the approov service that enables the ApproovSDK use. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with NSURLSession. This has a further dependency to the closed source Approov SDK itself. Install the dependency by executing:
+
 ```
-$ approov sdk -getLibrary approov-sdk.zip
-$ unzip approov-sdk.zip
+$ pod install
+Analyzing dependencies
+Cloning spec repo `approov` from `https://github.com/approov/approov-service-nsurlsession.git`
+Cloning spec repo `approov-1` from `https://github.com/approov/approov-ios-sdk.git`
+Downloading dependencies
+Installing approov-ios-sdk (2.6.1)
+Installing approov-service-nsurlsession (2.6.1)
+Generating Pods project
+Integrating client project
+
+[!] Please close any current Xcode sessions and use `ApproovShapes.xcworkspace` for this project from now on.
+Pod installation complete! There are 2 dependencies from the Podfile and 2 total pods installed.
 ```
-In Xcode select `File` and then `Add Files to "ApproovShapes"...` and select the unzipped Approov.framework folder from the previous command:
 
-![Add Files to ApproovShapes](readme-images/add-files-to-approovshapes.png)
-
-Make sure the `Copy items if needed` option and the target `ApproovShapes` are selected. Once the Approov framework appears in the project structure we have to ensure it is signed and embedded in the ApproovShapes binary. To do so, select the target `ApproovShapes` and in the `General` tab scroll to the `Frameworks, Libraries and Embedded Content` section where the `Approov.framework` entry must have `Embed & Sign` selected in the `Embed` column:
-
-![Embed & Sign](readme-images/embed-and-sign.png)
-
-The Approov SDK is now included as a dependency in your project.
-
-## ADD THE APPROOV FRAMEWORK CODE
-
-The `shapes-app`' folder's sub-folder `framework` contains an `ApproovURLSession.swift` file. This provides a wrapper around the Approov SDK itself to make it easier to use with swift's `URLSession` class. In Xcode select `File` and then `Add Files to "ApproovShapes"...` and select the `ApproovURLSession.swift` file:
-
-![Add Swift File](readme-images/add-swift-file.png)
-
-Make sure the `Copy items if needed` option and the target `ApproovShapes` are selected. Your project structure should look like this:
-
-![Final Project View](readme-images/final-project-view.png)
+The Approov SDK is now included as a dependency in your project. Please observe `pod install` command output notice regarding the `ApproovShapes.xcworkspace` as it is the correct way to modify the project from this point on.
 
 ## ENSURE THE SHAPES API IS ADDED
 
@@ -109,21 +103,7 @@ In order for Approov to recognize the app as being valid it needs to be register
 
 ![Target Device](readme-images/target-device.png)
 
-We can now build the application by selecting `Product` and then `Build`. Allow the build to finish. In the project explorer panel of Xcode, under the `Products` folder right-click on `ApproovShapes.app` and select the option `Show in Finder` which will show the application in the build directory.
-
-![Build app](readme-images/build-app.png)
-
-The build folder will look something like this:
-
-![Build Folder](readme-images/build-folder.png)
-
-Create a new folder, name it `Payload` and move the `ApproovShapes` application to the newly created `Payload` directory:
-
-![Payload Folder](readme-images/payload-folder.png)
-
-Right-click on the `Payload` folder and select `Compress "Payload"`. This will produce a `Payload.zip` file. Rename the `Payload.zip` file to `ApproovShapes.ipa` (note the file extension change).
-
-![Build IPA Result](readme-images/build-ipa-result.png)
+We can now build the application by selecting `Product` and then `Archive`. Select the apropriate code signing options and eventually a destination to save the `.ipa` file.
 
 Copy the `ApproovShapes.ipa` file to a convenient working directory. Register the app with Approov:
 ```
@@ -165,19 +145,13 @@ If you have a trial (as opposed to demo) account you have some additional option
 
 ### Configuration
 
-This quick start guide has taken you through the steps of adding Approov to the shapes demonstration app. If you have you own app using Swift you can follow exactly the same steps to add Approov. Take note of the dependency discussion [here](https://approov.io/docs/v2.2/approov-usage-documentation/#importing-the-approov-sdk-into-ios-xcode).
+This quick start guide has taken you through the steps of adding Approov to the shapes demonstration app. If you have you own app using Swift you can follow exactly the same steps to add Approov. Take note of the dependency discussion [here](https://approov.io/docs/latest/approov-usage-documentation/#importing-the-approov-sdk-into-ios-xcode).
 
 ### API Domains
 Remember you need to [add](https://approov.io/docs/latest/approov-usage-documentation/#adding-api-domains) all of the API domains that you wish to send Approov tokens for. You can still use the Approov `swift` client for other domains, but no `Approov-Token` will be sent. 
 
-### Preferences
-An Approov app automatically downloads any new configurations of APIs and their pins that are available. These are stored in the [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults) for the app in a preference key `approov-dynamic`. You can store the preferences differently by modifying or overriding the methods `storeDynamicConfig` and `readDynamicApproovConfig` in `ApproovURLSession.swift`.
-
 ### Changing Your API Backend
 The Shapes example app uses the API endpoint `https://shapes.approov.io/v2/shapes` hosted on Approov's servers. If you want to integrate Approov into your own app you will need to [integrate](https://approov.io/docs/latest/approov-usage-documentation/#backend-integration) an Approov token check. Since the Approov token is simply a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) this is usually straightforward. [Backend integration](https://approov.io/docs/latest/approov-integration-examples/backend-api/) examples provide a detailed walk-through for particular languages. Note that the default header name of `Approov-Token` can be modified by changing the variable `approovTokenPrefix`, i.e. in integrations that need to be prefixed with `Bearer`, like the `Authorization` header. It is also possible to change the `Approov-Token` header completely by overriding the contents of `kApproovTokenHeader` variable. 
-
-### Token Prefetching
-If you wish to reduce the latency associated with fetching the first Approov token, then a call to `ApproovSDK.prefetchApproovToken` can be made immediately after initialization of the Approov SDK. This initiates the process of fetching an Approov token as a background task, so that a cached token is available immediately when subsequently needed, or at least the fetch time is reduced. Note that if this feature is being used with [Token Binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) then the binding must be set prior to the prefetch, as changes to the binding invalidate any cached Approov token.
 
 ## NEXT STEPS
 
@@ -190,7 +164,6 @@ This quick start guide has shown you how to integrate Approov with your existing
 * Understand how to provide access for other [Users](https://approov.io/docs/latest/approov-usage-documentation/#user-management) of your Approov account.
 * Use the [Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs) to see live and accumulated metrics of devices using your account and any reasons for devices being rejected and not being provided with valid Approov tokens. You can also see your billing usage which is based on the total number of unique devices using your account each month.
 * Use [Service Monitoring](https://approov.io/docs/latest/approov-usage-documentation/#service-monitoring) emails to receive monthly (or, optionally, daily) summaries of your Approov usage.
-* Consider using [Token Binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding). The property `ApproovSDK.bindHeader` takes the name of the header holding the value to be bound. This only needs to be called once but the header needs to be present on all API requests using Approov.
 * Learn about [automated approov CLI usage](https://approov.io/docs/latest/approov-usage-documentation/#automated-approov-cli-usage).
 * Investigate other advanced features, such as [Offline Security Mode](https://approov.io/docs/latest/approov-usage-documentation/#offline-security-mode) and [DeviceCheck Integration](https://approov.io/docs/latest/approov-usage-documentation/#apple-devicecheck-integration).
 
