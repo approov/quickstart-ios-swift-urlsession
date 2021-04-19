@@ -1,0 +1,6 @@
+target 'ApproovShapes' do
+    use_frameworks!
+    platform :ios, '10.0'
+    pod 'approov-service-urlsession', '2.6.1', :source => "https://github.com/approov/approov-service-urlsession.git"
+    pod 'approov-ios-sdk', '2.6.1', :source => "https://github.com/approov/approov-ios-sdk.git"
+end
