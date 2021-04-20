@@ -86,6 +86,12 @@ We need to add the text file to our project and ensure it gets copied to the roo
 
 ## MODIFY THE APP TO USE APPROOV
 
+Before using Approov you need to import the URLSession Service. In the `ViewController.swift` source file import the service module:
+
+```swift
+import approov_service_urlsession
+```
+
 Find the following line in `ViewController.swift` source file:
 ```swift
 var defaultSession = URLSession(configuration: .default)
