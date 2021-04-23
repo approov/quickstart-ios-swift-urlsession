@@ -50,7 +50,7 @@ Get the latest Approov SDK by using `CocoaPods`. The `Podfile` configuration fil
 ```
 $ pod install
 Analyzing dependencies
-Cloning spec repo `approov` from `https://github.com/approov/approov-service-nsurlsession.git`
+Cloning spec repo `approov` from `https://github.com/approov/approov-service-urlsession.git`
 Cloning spec repo `approov-1` from `https://github.com/approov/approov-ios-sdk.git`
 Downloading dependencies
 Installing approov-ios-sdk (2.6.1)
@@ -63,6 +63,9 @@ Pod installation complete! There are 2 dependencies from the Podfile and 2 total
 ```
 
 The Approov SDK is now included as a dependency in your project. Please observe `pod install` command output notice regarding the `ApproovShapes.xcworkspace` as it is the correct way to modify the project from this point on.
+
+This guide assumes you are NOT using bitcode. The Approov SDK is also available with bitcode support. If you wish to use it read the relevant section in the approov service [documentation](https://github.com/approov/approov-service-urlsession) since you will need to modify the `Podfile` to use the bitcode enabled version of the SDK. Remember to also use `-bitcode` when using the `approov` admin tools to register your application with the Approov service.
+
 
 ## ENSURE THE SHAPES API IS ADDED
 
