@@ -5,7 +5,7 @@ This quickstart is written specifically for native iOS apps that are written in 
 ## WHAT YOU WILL NEED
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
-* [Xcode](https://developer.apple.com/xcode/) version 11 installed (version 11.3.1 is used in this guide)
+* [Xcode](https://developer.apple.com/xcode/) version 11 installed (version 12.3 is used in this guide)
 * The contents of the folder containing this README
 * An Apple mobile device with iOS 10 or higher
 
