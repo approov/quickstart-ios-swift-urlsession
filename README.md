@@ -5,7 +5,7 @@ This quickstart is written specifically for native iOS apps that are written in 
 ## WHAT YOU WILL NEED
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
-* [Xcode](https://developer.apple.com/xcode/) version 12 installed (version 12.3 is used in this guide)
+* [Xcode](https://developer.apple.com/xcode/) version 12 installed (version 12.5 is used in this guide)
 * The contents of the folder containing this README
 * An Apple mobile device with iOS 10 or higher
 
@@ -45,26 +45,21 @@ This contacts `https://shapes.approov.io/v2/shapes` to get the name of a random 
 
 ## ADD THE APPROOV SDK AND THE APPROOV SERVICE URLSESSION
 
-Get the latest Approov SDK by using `CocoaPods`. The `Podfile` configuration file is located in the `shapes-app/ApproovShapes` directory and should contain a reference to the latest version of the Approov SDK available for iOS and the approov service that enables the ApproovSDK use. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with NSURLSession. This has a further dependency to the closed source Approov SDK itself. Install the dependency by executing:
+Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes branches pointing to the relevant Approov SDK release versions as well as bitcode versions. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with NSURLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Swift Packages`, `Add Package Dependency`:
 
-```
-$ pod install
-Analyzing dependencies
-Cloning spec repo `approov` from `https://github.com/approov/approov-service-urlsession.git`
-Cloning spec repo `approov-1` from `https://github.com/approov/approov-ios-sdk.git`
-Downloading dependencies
-Installing approov-ios-sdk (2.6.1)
-Installing approov-service-nsurlsession (2.6.1)
-Generating Pods project
-Integrating client project
+![Add Package Repository](readme-images/add-package-repository.png)
 
-[!] Please close any current Xcode sessions and use `ApproovShapes.xcworkspace` for this project from now on.
-Pod installation complete! There are 2 dependencies from the Podfile and 2 total pods installed.
-```
+You will then have to select the relevan Approov SDK version you wish to use. To do so, select the `branch` option and enter the relevant SDK version, in this case `2.7.0`:
 
-The Approov SDK is now included as a dependency in your project. Please observe `pod install` command output notice regarding the `ApproovShapes.xcworkspace` as it is the correct way to modify the project from this point on.
+![Set SDK Version](readme-images/branch-select.png)
 
-This guide assumes you are NOT using bitcode. The Approov SDK is also available with bitcode support. If you wish to use it read the relevant section in the approov service [documentation](https://github.com/approov/approov-service-urlsession) since you will need to modify the `Podfile` to use the bitcode enabled version of the SDK. Remember to also use `-bitcode` when using the `approov` admin tools to register your application with the Approov service.
+Once you click `Next` the last screen will confirm the package product and target selection:
+
+![Target Selection](readme-images/target-selection.png)
+
+The Approov SDK is now included as a dependency in your project. 
+
+This guide assumes you are NOT using bitcode. The Approov SDK is also available with bitcode support. If you wish to use it read the relevant section in the approov service [documentation](https://github.com/approov/approov-service-urlsession) since you will need to modify the branch from which to obtain the code, in this case you should use branch `2.7.0-bitcode` , to use the bitcode enabled version of the SDK. Remember to also use `-bitcode` when using the `approov` admin tools to register your application with the Approov service.
 
 
 ## ENSURE THE SHAPES API IS ADDED
@@ -92,7 +87,7 @@ We need to add the text file to our project and ensure it gets copied to the roo
 Before using Approov you need to import the URLSession Service. In the `ViewController.swift` source file import the service module:
 
 ```swift
-import approov_service_urlsession
+import ApproovURLSession
 ```
 
 Find the following line in `ViewController.swift` source file:
