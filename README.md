@@ -49,7 +49,7 @@ This contacts `https://shapes.approov.io/v2/shapes` to get the name of a random 
 
 ## ADD THE APPROOV SDK AND THE APPROOV SERVICE URLSESSION
 
-Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes branches pointing to the relevant Approov SDK release versions as well as bitcode versions. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with NSURLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Swift Packages`, `Add Package Dependency`:
+Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes branches pointing to the relevant Approov SDK release versions as well as bitcode versions. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Swift Packages`, `Add Package Dependency`:
 
 ![Add Package Repository](readme-images/add-package-repository.png)
 
