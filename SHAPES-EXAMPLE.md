@@ -37,9 +37,9 @@ This checks the connectivity by connecting to the endpoint `https://shapes.appro
 
 This contacts `https://shapes.approov.io/v2/shapes` to get the name of a random shape. It gets the status code 400 (`Bad Request`) because this endpoint is protected with an Approov token. Next, you will add Approov into the app so that it can generate valid Approov tokens and get shapes.
 
-## ADD THE APPROOV SDK AND THE APPROOV SERVICE URLSESSION
+## ADD THE APPROOV SERVICE URLSESSION
 
-Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes branches pointing to the relevant Approov SDK release versions as well as bitcode versions. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Swift Packages`, `Add Package Dependency`:
+Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes branches pointing to the relevant Approov SDK release versions. The approov-service-nsurlsession is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Swift Packages`, `Add Package Dependency`:
 
 ![Add Package Repository](readme-images/add-package-repository.png)
 
@@ -52,8 +52,6 @@ Once you click `Next` the last screen will confirm the package product and targe
 ![Target Selection](readme-images/target-selection.png)
 
 The Approov SDK is now included as a dependency in your project. 
-
-This guide assumes you are NOT using bitcode. The Approov SDK is also available with bitcode support. If you wish to use it read the relevant section in the approov service [documentation](https://github.com/approov/approov-service-urlsession) since you will need to modify the branch from which to obtain the code, in this case you should use branch `2.7.0-bitcode` , to use the bitcode enabled version of the SDK. Remember to also use `-bitcode` when using the `approov` admin tools to register your application with the Approov service.
 
 ## ENSURE THE SHAPES API IS ADDED
 
