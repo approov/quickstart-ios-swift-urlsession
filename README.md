@@ -17,7 +17,7 @@ This package is actually an open source wrapper layer that allows you to easily 
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional ApproovSDK attestation call. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` with `ApproovURLSession`. 
 
 ```swift
-let aSession = ApproovURLSession(URLSessionConfiguration.default, "<enter-you-config-string-here>")
+let session = ApproovURLSession(URLSessionConfiguration.default, "<enter-you-config-string-here>")
 ```
 Additionaly, the Approov SDK needs to be initialized before use. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
 
