@@ -24,7 +24,7 @@ You can now build the application by selecting `Product` and then `Archive`. Sel
 approov registration -add app.ipa
 ```
 
-> **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time as elapsed. During development of your app you can [whitelist](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) your device to not have to register the IPA each time you modify it.
+> **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time as elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device so you do not have to register the IPA each time you modify it.
 
 [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) provides more details for app registrations.
 
