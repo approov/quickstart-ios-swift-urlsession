@@ -43,7 +43,7 @@ Get the latest Approov SDK by using `swift package manager`. The repository loca
 
 ![Add Package Repository](readme-images/add-package-repository.png)
 
-You will then have to select the relevan Approov SDK version you wish to use. To do so, select the `branch` option and enter the relevant SDK version, in this case `2.7.0`:
+You will then have to select the relevan Approov SDK version you wish to use. To do so, select the `version` option and enter the relevant SDK version, in this case `2.9.0`:
 
 ![Set SDK Version](readme-images/branch-select.png)
 
