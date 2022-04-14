@@ -16,7 +16,6 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var statusImageView: UIImageView!
@@ -29,7 +28,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //*** UNCOMMENT TO USE APPROOV
-        //try! ApproovService.initialize(config: "<enter-you-config-string-here>")
+        //try! ApproovService.initialize(config: "#cb-ivol#mAxOF0ekJUOC36J5XWmVmVipOcUoEdMjhPSp2FVtyTo=")
+        // #cb-ivol#mAxOF0ekJUOC36J5XWmVmVipOcUoEdMjhPSp2FVtyTo=
         //*** UNCOMMENT THE LINE BELLOW FOR APPROOV USING SECRET PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
@@ -46,7 +46,9 @@ class ViewController: UIViewController {
             self.statusImageView.image = UIImage(named: "approov")
             self.statusTextView.text = "Checking connectivity..."
         }
-        let task = defaultSession.dataTask(with: helloURL) { (data, response, error) in
+        var request = URLRequest(url: helloURL)
+        request.setValue(apiSecretKey, forHTTPHeaderField: "Api-Key")
+        let task = defaultSession.dataTask(with: request) { (data, response, error) in
             let message: String
             let image: UIImage?
             
@@ -100,8 +102,9 @@ class ViewController: UIViewController {
             self.statusImageView.image = UIImage(named: "approov")
             self.statusTextView.text = "Checking app authenticity..."
         }
-        
-        let task = defaultSession.dataTask(with: shapesURL) { (data, response, error) in
+        var request = URLRequest(url: shapesURL)
+        request.setValue(apiSecretKey, forHTTPHeaderField: "Api-Key")
+        let task = defaultSession.dataTask(with: request) { (data, response, error) in
             var message: String
             let image: UIImage?
             
