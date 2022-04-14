@@ -31,7 +31,9 @@ The `ApproovService` provides specific type errors when using some functions to 
 * `permanentError` might be due to a feature not enabled using the command line
 * `rejectionError` an attestation has been rejected, the `ARC` and `rejectionReasons` may contain specific device information that would help troubleshooting
 * `networkingError` generaly can be retried since it can be temporary network issue
-* `runtimeError` is an unexpected error
+* `pinningError` is a certificate error
+* `configurationError` a configuration feature is disabled or wrongly configured (i.e. attempting to initialize with diferent config) 
+* `initializationFailure` the ApproovService failed to be initialized
 
 ## CHECKING IT WORKS
 Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.

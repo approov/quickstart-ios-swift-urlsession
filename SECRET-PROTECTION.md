@@ -137,9 +137,7 @@ do {
 } catch ApproovError.networkingError(let message) {
     // we are unable to get the secure string due to network conditions so the request can
     // be retried by the user later
-} catch ApproovError.runtimeError(let message) {
-    // we are unable to get the secure string due to a more permanent error
-} catch {
+}  catch {
     // Unexpected error
 }
 // use `secret` as required, but never cache or store its value - note `secret` will be null if the provided key is not defined
@@ -168,7 +166,7 @@ do {
 } catch ApproovError.networkingError(let message) {
     // we are unable to get the secure string due to network conditions so the request can
     // be retried by the user later
-} catch ApproovError.runtimeError(let message) {
+} catch ApproovError.permanentError(let message) {
     // we are unable to get the secure string due to a more permanent error
 } catch {
     // Unexpected error

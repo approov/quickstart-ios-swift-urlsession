@@ -78,7 +78,7 @@ do {
 } catch ApproovError.networkingError(let message) {
     // we are unable to get the secure string due to network conditions so the request can
     // be retried by the user later
-} catch ApproovError.runtimeError(let message) {
+} catch ApproovError.permanentError(let message) {
     // we are unable to get the secure string due to a more permanent error
 } catch {
     // Unexpected error
