@@ -17,9 +17,23 @@ This package is actually an open source wrapper layer that allows you to easily 
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional ApproovSDK attestation call. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` with `ApproovURLSession`. 
 
 ```swift
-let session = ApproovURLSession(URLSessionConfiguration.default, "<enter-you-config-string-here>")
+try! ApproovService.initialize("<enter-your-config-string-here>")
+let session = ApproovURLSession(URLSessionConfiguration.default)
 ```
-Additionally, the Approov SDK needs to be initialized before use. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
+Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before ussing the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
+
+For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values when using secret protection.
+Please note on the above code, the `ApproovService` is instantiated and might throw a `configurationError`exception if the configuration string provided as parameter is different than the already used one to initialize previously. If the underlying Appproov SDK can not be initialized because of a permanent issue, an `initializationFailure` is returned which should be considered permanent. Failure to initialise the `ApproovService` should cancel any network requests since lack of initialization is generally considered fatal.
+
+## ERROR MESSAGES
+The `ApproovService` provides specific type errors when using some functions to provide additional information about the type of error:
+
+* `permanentError` might be due to a feature not enabled using the command line
+* `rejectionError` an attestation has been rejected, the `ARC` and `rejectionReasons` may contain specific device information that would help troubleshooting
+* `networkingError` generaly can be retried since it can be temporary network issue
+* `pinningError` is a certificate error
+* `configurationError` a configuration feature is disabled or wrongly configured (i.e. attempting to initialize with diferent config) 
+* `initializationFailure` the ApproovService failed to be initialized
 
 ## CHECKING IT WORKS
 Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.
@@ -27,3 +41,12 @@ Initially you won't have set which API domains to protect, so the interceptor wi
 Your Approov onboarding email should contain a link allowing you to access [Live Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs). After you've run your app with Approov integration you should be able to see the results in the live metrics within a minute or so. At this stage you could even release your app to get details of your app population and the attributes of the devices they are running upon.
 
 However, to actually protect your APIs there are some further steps you can learn about in [Next Steps](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/NEXT-STEPS.md).
+
+## NEXT STEPS
+To actually protect your APIs there are some further steps. Approov provides two different options for protecting APIs:
+
+* [TOKEN PROTECTION](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/TOKEN-PROTECTION.md): You should use this if you control the backend API(s) being protected and are able to modify them to ensure that a valid Approov token is being passed by the app. An [Approov Token](https://approov.io/docs/latest/approov-usage-documentation/#approov-tokens) is short lived crytographically signed JWT proving the authenticity of the call.
+
+* [SECRET PROTECTION](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SECRET-PROTECTION.md): If you do not control the backend API(s) being protected, and are therefore unable to modify it to check Approov tokens, you can use this approach instead. It allows app secrets, and API keys, to be protected so that they no longer need to be included in the built code and are only made available to passing apps at runtime.
+
+Note that it is possible to use both approaches side-by-side in the same app, in case your app uses a mixture of 1st and 3rd party APIs.
