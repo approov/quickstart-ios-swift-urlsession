@@ -21,29 +21,31 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var statusTextView: UILabel!
-    
+    //*** MODIFY LINE TO USE APPROOV
     var defaultSession = URLSession(configuration: .default)
-    
+    //*** CHANGE THE LINE BELLOW FOR APPROOV USING SECURE STRINGS TO `shapes_api_key_placeholder`
+    let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //*** UNCOMMENT TO USE APPROOV
+        //try! ApproovService.initialize(config: "<enter-you-config-string-here>")
+        //*** UNCOMMENT THE LINE BELLOW FOR APPROOV USING SECRET PROTECTION
+        //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    // check unprotected hello endpoint
-
+    // Check hello endpoint
     @IBAction func checkHello() {
         let helloURL = URL(string: "https://shapes.approov.io/v1/hello")!
-        
         // Display busy screen
         DispatchQueue.main.async {
             self.statusImageView.image = UIImage(named: "approov")
             self.statusTextView.text = "Checking connectivity..."
         }
-
         let task = defaultSession.dataTask(with: helloURL) { (data, response, error) in
             let message: String
             let image: UIImage?
@@ -83,12 +85,15 @@ class ViewController: UIViewController {
         }
         
         task.resume()
+        
     }
     
-    // check Approov-protected shapes endpoint
-
+    
+    // Check Approov-protected shapes endpoint
     @IBAction func checkShape() {
-        let shapesURL = URL(string: "https://shapes.approov.io/v2/shapes")!
+        //*** SHAPES ENDPOINT VERSION
+        let currentShapesEndpoint = "v2"
+        let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
 
         // Display busy screen
         DispatchQueue.main.async {
