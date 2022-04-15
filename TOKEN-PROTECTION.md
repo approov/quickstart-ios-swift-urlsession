@@ -86,7 +86,7 @@ do {
     // we are unable to perform the precheck due to network conditions so the request can
     // be retried by the user later
 } catch ApproovError.configurationError(let message) {
-    // we are unable to perform the precheck due to a more permanent error
+    // feature has not been enabled using the command line tools
 } catch ApproovError.permanentError(let message) {
     // we are unable to perform the precheck due to a more permanent error
 } catch {
