@@ -16,21 +16,25 @@
 
 import UIKit
 
+//*** UNCOMMENT THE LINE BELOW FOR APPROOV
+//import ApproovURLSession
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var statusTextView: UILabel!
-    //*** MODIFY LINE TO USE APPROOV
+    //*** COMMENT THE LINE BELOW IF USING APPROOV
     var defaultSession = URLSession(configuration: .default)
-    //*** CHANGE THE LINE BELLOW FOR APPROOV USING SECURE STRINGS TO `shapes_api_key_placeholder`
+    //*** UNCOMMENT THE LINE BELOW FOR APPROOV
+    //var defaultSession = ApproovURLSession(configuration: .default)
+    //*** CHANGE THE LINE BELOW FOR APPROOV USING SECRET PROTECTION TO `shapes_api_key_placeholder`
     let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //*** UNCOMMENT TO USE APPROOV
-        //try! ApproovService.initialize(config: "#cb-ivol#mAxOF0ekJUOC36J5XWmVmVipOcUoEdMjhPSp2FVtyTo=")
-        // #cb-ivol#mAxOF0ekJUOC36J5XWmVmVipOcUoEdMjhPSp2FVtyTo=
-        //*** UNCOMMENT THE LINE BELLOW FOR APPROOV USING SECRET PROTECTION
+        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
+        //try! ApproovService.initialize(config: "<enter-you-config-string-here>")
+        //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRET PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
 
@@ -47,7 +51,6 @@ class ViewController: UIViewController {
             self.statusTextView.text = "Checking connectivity..."
         }
         var request = URLRequest(url: helloURL)
-        request.setValue(apiSecretKey, forHTTPHeaderField: "Api-Key")
         let task = defaultSession.dataTask(with: request) { (data, response, error) in
             let message: String
             let image: UIImage?
@@ -93,8 +96,10 @@ class ViewController: UIViewController {
     
     // Check Approov-protected shapes endpoint
     @IBAction func checkShape() {
-        //*** SHAPES ENDPOINT VERSION
-        let currentShapesEndpoint = "v2"
+        //*** COMMENT THE LINE BELOW TO USE APPROOV TOKEN PROTECTION
+        let currentShapesEndpoint = "v1"
+        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV TOKEN PROTECTION
+        //let currentShapesEndpoint = "v3"
         let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
 
         // Display busy screen

@@ -23,24 +23,21 @@ let session = ApproovURLSession(URLSessionConfiguration.default)
 Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before ussing the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
 
 For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values when using secret protection.
-Please note on the above code, the `ApproovService` is instantiated and might throw a `configurationError`exception if the configuration string provided as parameter is different than the already used one to initialize previously. If the underlying Appproov SDK can not be initialized because of a permanent issue, an `initializationFailure` is returned which should be considered permanent. Failure to initialise the `ApproovService` should cancel any network requests since lack of initialization is generally considered fatal.
 
-## ERROR MESSAGES
-The `ApproovService` provides specific type errors when using some functions to provide additional information about the type of error:
+## ERROR TYPES
+The `ApproovService` functions may throw specific errors to provide additional information:
 
 * `permanentError` might be due to a feature not enabled using the command line
 * `rejectionError` an attestation has been rejected, the `ARC` and `rejectionReasons` may contain specific device information that would help troubleshooting
 * `networkingError` generaly can be retried since it can be temporary network issue
 * `pinningError` is a certificate error
-* `configurationError` a configuration feature is disabled or wrongly configured (i.e. attempting to initialize with diferent config) 
-* `initializationFailure` the ApproovService failed to be initialized
+* `configurationError` a configuration feature is disabled or wrongly configured (i.e. attempting to initialize with different config from a previous instantiation) 
+* `initializationFailure` the ApproovService failed to be initialized (subsequent network requests will not be performed)
 
 ## CHECKING IT WORKS
 Initially you won't have set which API domains to protect, so the interceptor will not add anything. It will have called Approov though and made contact with the Approov cloud service. You will see logging from Approov saying `UNKNOWN_URL`.
 
 Your Approov onboarding email should contain a link allowing you to access [Live Metrics Graphs](https://approov.io/docs/latest/approov-usage-documentation/#metrics-graphs). After you've run your app with Approov integration you should be able to see the results in the live metrics within a minute or so. At this stage you could even release your app to get details of your app population and the attributes of the devices they are running upon.
-
-However, to actually protect your APIs there are some further steps you can learn about in [Next Steps](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/NEXT-STEPS.md).
 
 ## NEXT STEPS
 To actually protect your APIs there are some further steps. Approov provides two different options for protecting APIs:

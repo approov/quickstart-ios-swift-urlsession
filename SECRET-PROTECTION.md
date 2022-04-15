@@ -67,10 +67,9 @@ approov registration -add YourApp.ipa
 ```
 Note, on Windows you need to substitute \ for / in the above command.
 
-> **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time has elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device to not have to register the APK each time you modify it.
+> **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time has elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device to not have to register the IPA each time you modify it.
 
 [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) provides more details for app registrations, especially for releases to the Apple Store. Of particular interest to iOS is the use of codesigning certificates that belong to different team identifiers.
-
 
 [Bitcode](https://approov.io/docs/latest/approov-usage-documentation/#bitcode-mode-management) is supported by Approov but requires command line option to be specified when downloading SDKs and registering apps.
 
@@ -81,7 +80,7 @@ approov registration -add YourApp.ipa -bitcode
 ## HANDLING REJECTIONS
 If the app is not recognized as being valid by Approov then an `ApproovError` type exception is thrown from the network request and the API call is not completed. The secret value will never be communicated to the app in this case.
 
-If the `ApproovError` is of type `rejectionError` it contains an `ARC` key in its dictionary which should provide more information regarding a possible reason for the failure, as explained in [Attestation Response Code](https://approov.io/docs/latest/approov-usage-documentation/#attestation-response-code). It would be possible to provide more information about the status of the device without revealing any details to the user.
+If the exception is of type `ApproovError.rejectionError` it contains an `ARC` value which should provide more information regarding a possible reason for the failure, as explained in [Attestation Response Code](https://approov.io/docs/latest/approov-usage-documentation/#attestation-response-code). It would be possible to provide more information about the status of the device without revealing any details to the user.
 
 If you wish to provide more direct feedback then enable the [Rejection Reasons](https://approov.io/docs/latest/approov-usage-documentation/#rejection-reasons) feature:
 
@@ -91,7 +90,7 @@ approov policy -setRejectionReasons on
 
 > Note that this command requires an [admin role](https://approov.io/docs/latest/approov-usage-documentation/#account-access-roles).
 
-You will then be able to use the `rejectionReasons` key in the `NSError` returned from the network call to obtain a comma separated list of [device properties](https://approov.io/docs/latest/approov-usage-documentation/#device-properties) responsible for causing the rejection.
+You will then be able to use the `rejectionReasons` value in the `ApproovError.rejectionError` returned from the network call to obtain a comma separated list of [device properties](https://approov.io/docs/latest/approov-usage-documentation/#device-properties) responsible for causing the rejection.
 
 ## FURTHER OPTIONS
 
@@ -119,31 +118,32 @@ func fetchSecureString(key: String, newDef: String?) throws -> String?
 
 to lookup a secure string with the given `key`, returning `nil` if it is not defined. Note that you should never cache this value in your code. Approov does the caching for you in a secure way. You may define a new value for the `key` by passing a new value in `newDef` rather than `nil`. An empty string `newDef` is used to delete the secure string.
 
-Here is an example of using the required method in ApproovService:
+Here is an example of using the required method in `ApproovService`:
 
 ```swift
-
-....
-var key:String?
+var key:String
 var newDef:String?
 var secret:String?
-// define key and newDefinition here
+// define key and newDef here
 do {
-    try secret = ApproovService.fetchSecureString(key: key!, newDef: newDef!)
-} catch ApproovError.rejectionError(let message, let ARC , let rejectionReasons ) {
-    // failure due to the attestation being rejected, the ARC and rejectionReasons objects contain additional information
+    try secret = ApproovService.fetchSecureString(key: key, newDef: newDef)
+} catch ApproovError.rejectionError(let message, let ARC, let rejectionReasons) {
+    // failure due to the attestation being rejected, the ARC and rejectionReasons contain additional information
+} catch ApproovError.configurationError(let message) {
+    // feature has not been enabled using the command line tools
 } catch ApproovError.permanentError(let message) {
-    // A feature has not been enabled using the command line tools
+    // we are unable to get the secure string due to a more permanent error
 } catch ApproovError.networkingError(let message) {
     // we are unable to get the secure string due to network conditions so the request can
     // be retried by the user later
-}  catch {
-    // Unexpected error
+} catch {
+    // unexpected error
 }
-// use `secret` as required, but never cache or store its value - note `secret` will be null if the provided key is not defined
+// use `secret` as required, but never cache or store its value - note `secret` will be nil if the provided key is not defined
 ```
 
-Note that this method may make networking calls so should never be called from the main UI thread. 
+Note that this method may make networking calls so should never be called from the main UI thread.
+
 This method is also useful for providing runtime secrets protection when the values are not passed on headers.  
 
 ### Prefetching
@@ -161,17 +161,18 @@ You may wish to do an early check in your to present a warning to the user if th
 ```swift
 do {
     try ApproovService.precheck()
-} catch ApproovError.rejectionError(let message, let ARC , let rejectionReasons ) {
+} catch ApproovError.rejectionError(let message, let ARC, let rejectionReasons) {
     // failure due to the attestation being rejected, the ARC and rejectionReasons objects contain additional information
 } catch ApproovError.networkingError(let message) {
-    // we are unable to get the secure string due to network conditions so the request can
+    // we are unable to perform a precheck due to network conditions so the request can
     // be retried by the user later
+} catch ApproovError.configurationError(let message) {
+    // feature has not been enabled using the command line tools
 } catch ApproovError.permanentError(let message) {
-    // we are unable to get the secure string due to a more permanent error
+    // we are unable to perform a precheck due to a more permanent error
 } catch {
     // Unexpected error
 }
 ```
-
 
 > Note you should NEVER use this as the only form of protection in your app, this is simply to provide an early indication of failure to your users as a convenience. You must always also have secrets essential to the operation of your app, or access to backend API services, protected with Approov. This is because, although the test itself is heavily secured, it may be possible for an attacker to bypass its result or prevent it being called at all. When the app is dependent on the secrets protected, it is not possible for them to be obtained at all without passing the attestation.
