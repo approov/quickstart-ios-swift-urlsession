@@ -24,7 +24,7 @@ approov registration -add YourApp.ipa
 
 [Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) provides more details for app registrations, especially for releases to the Apple Store.
 
-[Bitcode](https://approov.io/docs/latest/approov-usage-documentation/#bitcode-mode-management) is supported by Approov but requires a command line option to be specified when registering apps.
+Bitcode is supported by Approov (if you included the appropriate Swift package) but its use requires a command line option to be specified when registering apps:
 
 ```
 approov registration -add YourApp.ipa -bitcode
