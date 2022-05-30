@@ -27,14 +27,14 @@ class ViewController: UIViewController {
     var defaultSession = URLSession(configuration: .default)
     //*** UNCOMMENT THE LINE BELOW FOR APPROOV
     //var defaultSession = ApproovURLSession(configuration: .default)
-    //*** CHANGE THE LINE BELOW FOR APPROOV USING SECRET PROTECTION TO `shapes_api_key_placeholder`
+    //*** CHANGE THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION TO `shapes_api_key_placeholder`
     let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
         //try! ApproovService.initialize(config: "<enter-you-config-string-here>")
-        //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRET PROTECTION
+        //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
 
@@ -96,9 +96,9 @@ class ViewController: UIViewController {
     
     // Check Approov-protected shapes endpoint
     @IBAction func checkShape() {
-        //*** COMMENT THE LINE BELOW TO USE APPROOV TOKEN PROTECTION
+        //*** COMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
         let currentShapesEndpoint = "v1"
-        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV TOKEN PROTECTION
+        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
         //let currentShapesEndpoint = "v3"
         let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
 
