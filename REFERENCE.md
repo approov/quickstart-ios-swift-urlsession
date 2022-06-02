@@ -100,7 +100,7 @@ This throws `ApproovError` if the there was a problem obtaining an Approov token
 Gets the [message signature](https://approov.io/docs/latest/approov-usage-documentation/#message-signing) for the given `message`. This is returned as a base64 encoded signature. This feature uses an account specific message signing key that is transmitted to the SDK after a successful fetch if the facility is enabled for the account. Note that if the attestation failed then the signing key provided is actually random so that the signature will be incorrect. An Approov token should always be included in the message being signed and sent alongside this signature to prevent replay attacks.
 
 ```swift
-public static func getMessageSignature(message: String) -> String
+public static func getMessageSignature(message: String) -> String?
 ```
 
 This return `nil` if there was an error obtaining the signature.
@@ -118,7 +118,7 @@ This throws `ApproovError` if the there was a problem obtaining the secure strin
 Fetches a [custom JWT](https://approov.io/docs/latest/approov-usage-documentation/#custom-jwts) with the given marshaled JSON `payload`.
 
 ```swift
-public static func fetchCustomJWT(payload: String) throws -> String?
+public static func fetchCustomJWT(payload: String) throws -> String
 ```
 
 This throws `ApproovError` if the there was a problem obtaining the custom JWT. This may require network access so may take some time to complete, and should not be called from the UI thread.

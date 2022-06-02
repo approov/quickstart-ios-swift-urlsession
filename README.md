@@ -48,3 +48,10 @@ To actually protect your APIs there are some further steps. Approov provides two
 
 Note that it is possible to use both approaches side-by-side in the same app, in case your app uses a mixture of 1st and 3rd party APIs.
 See [REFERENCE](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/REFERENCE.md) for a complete list of all of the `ApproovService` methods.
+
+## BITCODE
+The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. Head to the Github repository location at `https://github.com/approov/approov-service-urlsession` and check the tags, selecting the latest version of the package that supports bitcode:
+
+![Approov Service Packages](readme-images/ApproovServicePackages.png)
+
+In this case, we should use `3.0.1-bitcode` since is the latest bitcode enabled version. 
