@@ -11,7 +11,7 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Package Dependency](readme-images/AddPackage.png)
 
-This package is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
+This package is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk). Please head to the Github repository location at `https://github.com/approov/approov-service-urlsession` and check the available tags in order to select the latest available version.
 
 ## USING APPROOV SERVICE
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional ApproovSDK attestation call. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` with `ApproovURLSession`. 
