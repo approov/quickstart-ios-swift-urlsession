@@ -41,15 +41,15 @@ The subsequent steps of this guide show you how to provide better protection, ei
 
 ## ADD THE APPROOV SERVICE URLSESSION
 
-Get the latest Approov SDK by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes tags pointing to the relevant Approov SDK release versions. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Add Packages` and enter in the search box the url of the git repository `https://github.com/approov/approov-service-urlsession.git`. You will then have to select the relevan Approov SDK version you wish to use; each version is identified by a tag, with the main branch usually pointing to the latest version. Select the `version` option and enter the relevant SDK version, in this case `3.0.0`:
+Get the latest `approov-service-urlsession` by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes tags pointing to the relevant Approov SDK release versions. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Add Packages` and enter in the search box the url of the git repository `https://github.com/approov/approov-service-urlsession.git`. You will then have to select the relevant `approov-service-urlsession` version you wish to use; each version is identified by a tag, with the main branch usually pointing to the latest version. Select the `version` option and enter the desired one, in this case `3.0.1`:
 
-![Set SDK Version](readme-images/branch-select.png)
+![Set SDK Version](readme-images/AddPackage.png)
 
-Once you click `Next` the last screen will confirm the package product and target selection:
+Once you click `Add Package` the last screen will confirm the package product and target selection:
 
 ![Target Selection](readme-images/target-selection.png)
 
-The Approov SDK is now included as a dependency in your project. 
+The `approov-service-urlsession` is now included as a dependency in your project. Please note, that if yous select `3.0.1-bitcode` you will include the `approov-service-urlsession` that includes `bitcode` support.
 
 ## ENSURE THE SHAPES API IS ADDED
 
@@ -78,7 +78,7 @@ Replace `URLSession` with `ApproovURLSession`:
 var defaultSession = ApproovURLSession(configuration: .default)
 ```
 
-Now locate and uncomment the line inside the `viewDidLoad` function that initializes the `ApproovService` and remember to add the `config` parameter. The Approov SDK needs a configuration string to identify the account associated with the app. You will have received this in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`):
+Now locate and uncomment the line inside the `viewDidLoad` function that initializes the `ApproovService` and remember to add the `config` parameter. The `approov-service-urlsession` needs a configuration string to identify the account associated with the app. You will have received this in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`):
 
 ```swift
 try! ApproovService.initialize(config: "<enter-you-config-string-here>")
@@ -92,11 +92,11 @@ let currentShapesEndpoint = "v3"
 
 ## REGISTER YOUR APP WITH APPROOV
 
-In order for Approov to recognize the app as being valid it needs to be registered with the service. This requires building an `.ipa` file either using the `Archive` option of Xcode (this option will not be available if using the simulator) or building the app and then creating a compressed zip file and renaming it. We use the second option for which we have to make sure a `Generic iOS Device` is selected as build destination. This ensures an `embedded.mobileprovision` is included in the application package which is a requirement for the `approov` command line tool. 
+In order for Approov to recognize the app as being valid it needs to be registered with the service. This requires building an `.ipa` file using the `Archive` option of Xcode (this option will not be available if using the simulator). Make sure a `Generic iOS Device` is selected as build destination. This ensures an `embedded.mobileprovision` is included in the application package which is a requirement for the `approov` command line tool. 
 
 ![Target Device](readme-images/target-device.png)
 
-We can now build the application by selecting `Product` and then `Archive`. Select the apropriate code signing options and eventually a destination to save the `.ipa` file.
+We can now build the application by selecting `Product` and then `Archive`. Select the appropriate code signing options and eventually a destination to save the `.ipa` file.
 
 Copy the `ApproovShapes.ipa` file to a convenient working directory. Register the app with Approov:
 
@@ -134,7 +134,7 @@ If you still don't get a valid shape then there are some things you can try. Rem
 
 ## SHAPES APP WITH SECRETS PROTECTION
 
-This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are still going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key, so please the code so it points to `https://shapes.approov.io/v1/shapes/`.
+This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are still going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key, so please change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
 
 The `apiSecretKey` variable also needs to be changed as follows, removing the actual API key out of the code:
 
