@@ -1,12 +1,12 @@
 # Secrets Protection
-You should use this option if you wish to protect access to 3rd party or managed APIs where you are not able to add an Approov token check to the backend. This allows client secrets, or API keys, used for access to be protected with Approov. Rather than build secrets into an app where they might be reverse engineered, they are only provided at runtime by Approov for apps that are pass Approov attestation. This substantially improves your protection and prevents these secrets being abused by attackers. Where you are able to modify the backend we recommend you use API Protection for further enchanced flexibility and security.
+You should use this option if you wish to protect access to 3rd party or managed APIs where you are not able to add an Approov token check to the backend. This allows client secrets, or API keys, used for access to be protected with Approov. Rather than building secrets into an app where they might be reverse engineered, they are only provided at runtime by Approov for apps that are pass Approov attestation. This substantially improves your protection and prevents these secrets being abused by attackers. Where you are able to modify the backend we recommend you use API Protection for further enchanced flexibility and security.
 
-This quickstart provides straightforward implementation if the secret is currently supplied in a request header to the API. The `ApproovURLSession` class used as a connection is able to automatically substitute in the secret for headers, but only if the app has passed the Approov attestation checks. If the app fails its checks then you can add a custom [rejection](#handling-rejections) handler.
+This quickstart provides a straightforward implementation if the secret is currently supplied in a request header to the API. The `ApproovURLSession` class used as a connection is able to automatically substitute in the secret for headers, but only if the app has passed the Approov attestation checks. If the app fails its checks then you can add a custom [rejection](#handling-rejections) handler.
 
 These additional steps require access to the [Approov CLI](https://approov.io/docs/latest/approov-cli-tool-reference/), please follow the [Installation](https://approov.io/docs/latest/approov-installation/) instructions.
 
 ## ENABLING MANAGED TRUST ROOTS
-Client secrets or API keys also need to be protected in transit. For 3rd party APIs you should not pin against their certificates since you are not in control of when they might changed. Instead the [Managed Trust Roots](https://approov.io/docs/latest/approov-usage-documentation/#managed-trust-roots) feature can be used to protect TLS.
+Client secrets or API keys also need to be protected in transit. For 3rd party APIs you should not pin against their certificates since you are not in control of when they might be changed. Instead the [Managed Trust Roots](https://approov.io/docs/latest/approov-usage-documentation/#managed-trust-roots) feature can be used to protect TLS.
 
 Ensure managed trust roots are enabled using:
 
@@ -60,7 +60,7 @@ With this in place, network calls using `ApproovURLSession` should replace the `
 Since earlier released versions of the app may have already leaked the `<secret-value>`, you may wish to refresh the secret at some later point when any older version of the app is no longer in use. You can of course do this update over-the-air using Approov without any need to modify the app.
 
 ## REGISTERING APPS
-In order for Approov to recognize the app as being valid it needs to be registered with the service. Change the directory to the top level of your app project and then register the app with Approov:
+In order for Approov to recognize the app as being valid it needs to be registered with the service. In order for Approov to recognize the app as being valid it needs to be registered with the service. Change to the directory containing your app and then register it with Approov:
 
 ```Bash
 approov registration -add YourApp.ipa
@@ -68,7 +68,7 @@ approov registration -add YourApp.ipa
 
 > **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time has elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device to not have to register the IPA each time you modify it.
 
-[Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) provides more details for app registrations, especially for releases to the Apple Store. Of particular interest to iOS is the use of codesigning certificates that belong to different team identifiers.
+[Managing Registrations](https://approov.io/docs/latest/approov-usage-documentation/#managing-registrations) provides more details for app registrations, especially for releases to the Apple App Store. Of particular interest to iOS is the use of codesigning certificates that belong to different team identifiers.
 
 Bitcode is supported by Approov (if you included the appropriate Swift package) but its use requires a command line option to be specified when registering apps:
 
