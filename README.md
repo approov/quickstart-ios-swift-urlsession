@@ -20,7 +20,7 @@ The `ApproovURLSession` class mimics the interface of the `URLSession` class pro
 try! ApproovService.initialize("<enter-your-config-string-here>")
 let session = ApproovURLSession(URLSessionConfiguration.default)
 ```
-Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before ussing the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
+Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before using the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
 
 For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values when using secrets protection.
 
@@ -54,4 +54,4 @@ The `ApproovService` swift package provides different versions with and without 
 
 ![Approov Service Packages](readme-images/ApproovServicePackages.png)
 
-In this case, we should use `3.0.1-bitcode` since is the latest bitcode enabled version. 
+In this case, we should use `3.0.1-bitcode` since this is the latest bitcode enabled version.

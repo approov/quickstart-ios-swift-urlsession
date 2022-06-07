@@ -1,5 +1,5 @@
 # Secrets Protection
-You should use this option if you wish to protect access to 3rd party or managed APIs where you are not able to add an Approov token check to the backend. This allows client secrets, or API keys, used for access to be protected with Approov. Rather than building secrets into an app where they might be reverse engineered, they are only provided at runtime by Approov for apps that are pass Approov attestation. This substantially improves your protection and prevents these secrets being abused by attackers. Where you are able to modify the backend we recommend you use API Protection for further enchanced flexibility and security.
+You should use this option if you wish to protect access to 3rd party or managed APIs where you are not able to add an Approov token check to the backend. This allows client secrets, or API keys, used for access to be protected with Approov. Rather than building secrets into an app where they might be reverse engineered, they are only provided at runtime by Approov for apps that are pass Approov attestation. This substantially improves your protection and prevents these secrets being abused by attackers. Where you are able to modify the backend we recommend you use API Protection for further enhanced flexibility and security.
 
 This quickstart provides a straightforward implementation if the secret is currently supplied in a request header to the API. The `ApproovURLSession` class used as a connection is able to automatically substitute in the secret for headers, but only if the app has passed the Approov attestation checks. If the app fails its checks then you can add a custom [rejection](#handling-rejections) handler.
 
@@ -55,7 +55,7 @@ If the secret value is provided on the header `your-header` then it is necessary
 ApproovService.addSubstitutionHeader(header: "your-header", prefix: nil)
 ```
 
-With this in place, network calls using `ApproovURLSession` should replace `your-placeholder` with `your-secret` as required when the app passes attestation. Since the mapping lookup is performed on the placeholder value you have the flexibility of providing different secrets on different API calls, even if they passed with the same header name.
+With this in place, network calls using `ApproovURLSession` should replace `your-placeholder` with `your-secret` as required when the app passes attestation. Since the mapping lookup is performed on the placeholder value you have the flexibility of providing different secrets on different API calls, even if they are passed with the same header name.
 
 You can see a [worked example](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SHAPES-EXAMPLE.md#shapes-app-with-secrets-protection) for the Shapes app.
 
@@ -145,7 +145,7 @@ Note that this method may make networking calls so should never be called from t
 This method is also useful for providing runtime secrets protection when the values are not passed on headers.  
 
 ### Prefetching
-If you wish to reduce the latency associated with substituting the first secret, then make this call immediately after creating `ApproovService`:
+If you wish to reduce the latency associated with substituting the first secret, then make this call immediately after initializing `ApproovService`:
 
 ```swift
 ApproovService.prefetch()
