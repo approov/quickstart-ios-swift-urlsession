@@ -61,6 +61,14 @@ You can see a [worked example](https://github.com/approov/quickstart-ios-swift-u
 
 Since earlier released versions of the app may have already leaked `your-secret`, you may wish to refresh the secret at some later point when any older version of the app is no longer in use. You can of course do this update over-the-air using Approov without any need to modify the app.
 
+If the secret value is provided as a parameter in a URL query string with the name `your-param` then it is necessary to notify the `ApproovService` that the query parameter is subject to substitution. You do this by making the call once, after initialization:
+
+```swift
+ApproovService.addSubstitutionQueryParam(key: "your-param")
+```
+
+After this the `ApproovURLSession` should transform any instance of a URL such as `https://your.domain/endpoint?your-param=your-placeholder` into `https://your.domain/endpoint?your-param=your-secret`.
+
 ## REGISTERING APPS
 In order for Approov to recognize the app as being valid it needs to be registered with the service. In order for Approov to recognize the app as being valid it needs to be registered with the service. Change to the directory containing your app and then register it with Approov:
 

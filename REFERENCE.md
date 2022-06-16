@@ -34,11 +34,11 @@ Allows to set the name of the header (`approovTokenHeader`) that the Approov tok
 public static func setApproovHeader(header: String, prefix: String)
 ```
 
-## bindHeader
-Variable that holds the name of a binding header that may be present on requests being made. This is for the [token binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) feature. A header should be chosen whose value is unchanging for most requests (such as an Authorization header). If the `bindHeader` is present, then a hash of the header value is included in the issued Approov tokens to bind them to the value. This may then be verified by the backend API integration.
+## setBindingHeader
+Variable that holds the name of a binding header that may be present on requests being made. This is for the [token binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) feature. A header should be chosen whose value is unchanging for most requests (such as an Authorization header). If the binding header is present, then a hash of the header value is included in the issued Approov tokens to bind them to the value. This may then be verified by the backend API integration.
 
 ```swift
-public static func setBindingHeader(header:String)
+public static func setBindingHeader(header: String)
 ```
 
 ## addSubstitutionHeader
@@ -53,6 +53,20 @@ Removes a `header` previously added using `addSubstitutionHeader`.
 
 ```swift
 public static func removeSubstitutionHeader(header: String)
+```
+
+## addSubstitutionQueryParam
+Adds a key name for a query parameter that should be subject to secure strings substitution. This means that if the query parameter is present in a URL then the value will be used as a key to look up a secure string value which will be substituted as the query parameter value instead. This allows easy migration to the use of secure strings.
+
+```swift
+public static func addSubstitutionQueryParam(key: String)
+```
+
+## removeSubstitutionQueryParam
+Removes a query parameter key name previously added using `addSubstitutionQueryParam`.
+
+```swift
+public static func removeSubstitutionQueryParam(key: String)
 ```
 
 ## prefetch
@@ -75,10 +89,10 @@ This throws `ApproovError` if the precheck failed. This will likely require netw
 Gets the [device ID](https://approov.io/docs/latest/approov-usage-documentation/#extracting-the-device-id) used by Approov to identify the particular device that the SDK is running on. Note that different Approov apps on the same device will return a different ID. Moreover, the ID may be changed by an uninstall and reinstall of the app.
 
 ```swift
-public static func getDeviceID() -> String
+public static func getDeviceID() -> String?
 ```
 
-This returns nil if there is an error obtaining the device id.
+This returns `nil` if there is an error obtaining the device ID.
 
 ## setDataHashInToken
 Directly sets the [token binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) hash to be included in subsequently fetched Approov tokens. If the hash is different from any previously set value then this will cause the next token fetch operation to fetch a new token with the correct payload data hash. The hash appears in the `pay` claim of the Approov token as a base64 encoded string of the SHA256 hash of the data. Note that the data is hashed locally and never sent to the Approov cloud service. This is an alternative to using `bindHeader` and you should not use both methods at the same time.
