@@ -108,7 +108,7 @@ Performs an Approov token fetch for the given `url`. This should be used in situ
 public static func fetchToken(url: String) throws -> String
 ```
 
-This throws `ApproovError` if the there was a problem obtaining an Approov token. This may require network access so may take some time to complete, and should not be called from the UI thread.
+This throws `ApproovError` if there was a problem obtaining an Approov token. This may require network access so may take some time to complete, and should not be called from the UI thread.
 
 ## getMessageSignature
 Gets the [message signature](https://approov.io/docs/latest/approov-usage-documentation/#message-signing) for the given `message`. This is returned as a base64 encoded signature. This feature uses an account specific message signing key that is transmitted to the SDK after a successful fetch if the facility is enabled for the account. Note that if the attestation failed then the signing key provided is actually random so that the signature will be incorrect. An Approov token should always be included in the message being signed and sent alongside this signature to prevent replay attacks.
@@ -126,7 +126,7 @@ Fetches a [secure string](https://approov.io/docs/latest/approov-usage-documenta
 public static func fetchSecureString(key: String, newDef: String?) throws -> String?
 ```
 
-This throws `ApproovError` if the there was a problem obtaining the secure string. This may require network access so may take some time to complete, and should not be called from the UI thread.
+This throws `ApproovError` if there was a problem obtaining the secure string. This may require network access so may take some time to complete, and should not be called from the UI thread.
 
 ## fetchCustomJWT
 Fetches a [custom JWT](https://approov.io/docs/latest/approov-usage-documentation/#custom-jwts) with the given marshaled JSON `payload`.
@@ -135,4 +135,4 @@ Fetches a [custom JWT](https://approov.io/docs/latest/approov-usage-documentatio
 public static func fetchCustomJWT(payload: String) throws -> String
 ```
 
-This throws `ApproovError` if the there was a problem obtaining the custom JWT. This may require network access so may take some time to complete, and should not be called from the UI thread.
+This throws `ApproovError` if there was a problem obtaining the custom JWT. This may require network access so may take some time to complete, and should not be called from the UI thread.
