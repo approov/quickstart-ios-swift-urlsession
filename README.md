@@ -11,15 +11,16 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Package Dependency](readme-images/AddPackage.png)
 
-This package is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk). Please head to the Github repository location at `https://github.com/approov/approov-service-urlsession` and check the available tags in order to select the latest available version, for example `3.0.1` or `3.0.1-bitcode`.
+This package is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk). The latest available version is `3.0.2`.
 
 ## USING APPROOV SERVICE
-The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional ApproovSDK attestation call. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` with `ApproovURLSession`. 
+The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional Approov attestation calls. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` construction calls with `ApproovURLSession`. 
 
 ```swift
 try! ApproovService.initialize("<enter-your-config-string-here>")
 let session = ApproovURLSession(URLSessionConfiguration.default)
 ```
+
 Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before using the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
 
 For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values when using secrets protection.
@@ -49,9 +50,12 @@ To actually protect your APIs there are some further steps. Approov provides two
 Note that it is possible to use both approaches side-by-side in the same app, in case your app uses a mixture of 1st and 3rd party APIs.
 See [REFERENCE](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/REFERENCE.md) for a complete list of all of the `ApproovService` methods.
 
+## DATA TASK PUBLISHER
+The version of [`dataTaskPublisher(for:)`](https://developer.apple.com/documentation/foundation/urlsession/3329708-datataskpublisher) provided in `URLSession` does not add Approov protection.
+
+If you wish to use an Approov protected version then please call `dataTaskPublisherApproov` instead. Note though that this method may block when it is called when requesting network communication with the Approov cloud. Therefore you shouldn't call this method from the main UI thread.
+
+Note also that the methods related to `Performing Asynchronous Transfers` (introduced at iOS 15) do not currently provide Approov protection.
+
 ## BITCODE SUPPORT
-The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. Head to the Github repository location at `https://github.com/approov/approov-service-urlsession` and check the tags, selecting the latest version of the package that supports bitcode:
-
-![Approov Service Packages](readme-images/ApproovServicePackages.png)
-
-In this case, we should use `3.0.1-bitcode` since this is the latest bitcode enabled version.
+The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use `3.0.2-bitcode` since this is the latest bitcode enabled version.

@@ -127,9 +127,9 @@ to lookup a secure string with the given `key`, returning `nil` if it is not def
 Here is an example of using the required method in `ApproovService`:
 
 ```swift
-var key:String
-var newDef:String?
-var secret:String?
+var key: String
+var newDef: String?
+var secret: String?
 // define key and newDef here
 do {
     try secret = ApproovService.fetchSecureString(key: key, newDef: newDef)

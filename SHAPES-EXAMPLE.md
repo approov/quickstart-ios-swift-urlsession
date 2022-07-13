@@ -32,7 +32,7 @@ Click on the `Hello` button and you should see this:
 This checks the connectivity by connecting to the endpoint `https://shapes.approov.io/v1/hello`. Now press the `Shape` button and you will see this (or another shape):
 
 <p>
-    <img src="readme-images/shapes-good.jpeg" width="256" title="Shapes Good">
+    <img src="readme-images/shape.png" width="256" title="Shape">
 </p>
 
 This contacts `https://shapes.approov.io/v1/shapes` to get the name of a random shape. This endpoint is protected with an API key that is built into the code, and therefore can be easily extracted from the app.
@@ -41,7 +41,9 @@ The subsequent steps of this guide show you how to provide better protection, ei
 
 ## ADD THE APPROOV SERVICE URLSESSION
 
-Get the latest `approov-service-urlsession` by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes tags pointing to the relevant Approov SDK release versions. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with URLSession. Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Add Packages` and enter in the search box the url of the git repository `https://github.com/approov/approov-service-urlsession.git`. You will then have to select the relevant `approov-service-urlsession` version you wish to use; each version is identified by a tag, with the main branch usually pointing to the latest version. Select the `version` option and enter the desired one, in this case `3.0.1`:
+Get the latest `approov-service-urlsession` by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes tags pointing to the relevant Approov SDK release versions. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with URLSession.
+
+Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Add Packages` and enter in the search box the url of the git repository `https://github.com/approov/approov-service-urlsession.git`. You will then have to select the relevant `approov-service-urlsession` version you wish to use; each version is identified by a tag, with the main branch usually pointing to the latest version. Select the `version` option and enter the desired one, in this case `3.0.2`:
 
 ![Set SDK Version](readme-images/AddPackage.png)
 
@@ -49,7 +51,7 @@ Once you click `Add Package` the last screen will confirm the package product an
 
 ![Target Selection](readme-images/target-selection.png)
 
-The `approov-service-urlsession` is now included as a dependency in your project. Please note, that if yous select `3.0.1-bitcode` you will include the `approov-service-urlsession` that includes `bitcode` support.
+The `approov-service-urlsession` is now included as a dependency in your project.
 
 ## ENSURE THE SHAPES API IS ADDED
 
@@ -67,14 +69,10 @@ Before using Approov you need to import the `ApproovURLSession` Service. In the 
 import ApproovURLSession
 ```
 
-Find the following line in `ViewController.swift` source file:
+Find the following line in `ViewController.swift` source file and uncomment it (commenting the previous definition):
 
 ```swift
-var defaultSession = URLSession(configuration: .default)
-```
-Replace `URLSession` with `ApproovURLSession`:
-
-```swift
+//*** UNCOMMENT THE LINE BELOW FOR APPROOV
 var defaultSession = ApproovURLSession(configuration: .default)
 ```
 
@@ -84,9 +82,12 @@ Now locate and uncomment the line inside the `viewDidLoad` function that initial
 try! ApproovService.initialize(config: "<enter-you-config-string-here>")
 ```
 
-The `ApproovURLSession` class adds the `Approov-Token` header and also applies pinning for the connections to ensure that no Man-in-the-Middle can eavesdrop on any communication being made. Lastly, make sure we are using the Approov protected endpoint for the shapes server. Find the `checkShape` function and change the line below the comment to point to `v3`:
+The `ApproovURLSession` class adds the `Approov-Token` header and also applies pinning for the connections to ensure that no Man-in-the-Middle can eavesdrop on any communication being made.
+
+Lastly, make sure we are using the Approov protected endpoint for the shapes server. Find this line and uncomment it to point to `v3` (commenting the previous definition):
 
 ```swift
+//*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
 let currentShapesEndpoint = "v3"
 ```
 
@@ -115,7 +116,7 @@ Simply drag the `ipa` file to the device. Alternatively you can select `Window`,
 Launch the app and press the `Shape` button. You should now see this (or another shape):
 
 <p>
-    <img src="readme-images/shapes-good.jpeg" width="256" title="Shapes Good">
+    <img src="readme-images/shape-approoved.png" width="256" title="Shape Approoved">
 </p>
 
 This means that the app is getting a validly signed Approov token to present to the shapes endpoint.
@@ -136,10 +137,10 @@ If you still don't get a valid shape then there are some things you can try. Rem
 
 This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are still going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key, so please change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
 
-The `apiSecretKey` variable also needs to be changed as follows, removing the actual API key out of the code:
+The `apiSecretKey` variable also needs to be changed as follows, removing the actual API key out of the code. Find this line and uncomment it (commenting the previosu definition):
 
 ```swift
-//*** CHANGE THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION TO `shapes_api_key_placeholder`
+//*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
 let apiSecretKey = "shapes_api_key_placeholder"
 ```
 
@@ -162,7 +163,7 @@ approov secstrings -addKey shapes_api_key_placeholder -predefinedValue yXClypapW
 Next we need to inform Approov that it needs to substitute the placeholder value for the real API key on the `Api-Key` header. Find the line below and uncomment it:
 
 ```swift
-// *** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION ***
+// *** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
 ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
 ```
 
@@ -176,7 +177,7 @@ approov registration -add ApproovShapes.ipa
 Run the app again without making any changes to the app and press the `Get Shape` button. You should now see this (or another shape):
 
 <p>
-    <img src="readme-images/shapes-good.jpeg" width="256" title="Shapes Good">
+    <img src="readme-images/shape.png" width="256" title="Shape">
 </p>
 
 This means that the registered app is able to access the API key, even though it is no longer embedded in the app code, and provide it to the shapes request.

@@ -20,20 +20,33 @@ import UIKit
 //import ApproovURLSession
 
 class ViewController: UIViewController {
-    
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var statusTextView: UILabel!
+    
     //*** COMMENT THE LINE BELOW IF USING APPROOV
     var defaultSession = URLSession(configuration: .default)
+    
     //*** UNCOMMENT THE LINE BELOW FOR APPROOV
     //var defaultSession = ApproovURLSession(configuration: .default)
-    //*** CHANGE THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION TO `shapes_api_key_placeholder`
+    
+    //*** COMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
+    let currentShapesEndpoint = "v1"
+    
+    //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
+    //let currentShapesEndpoint = "v3"
+
+    //*** COMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
     let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
+    
+    //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
+    //let apiSecretKey = "shapes_api_key_placeholder"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
-        //try! ApproovService.initialize(config: "<enter-you-config-string-here>")
+        //try! ApproovService.initialize(config: "<enter-your-config-string-here>")
+        
         //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
@@ -44,13 +57,12 @@ class ViewController: UIViewController {
     
     // Check hello endpoint
     @IBAction func checkHello() {
-        let helloURL = URL(string: "https://shapes.approov.io/v1/hello")!
-        // Display busy screen
         DispatchQueue.main.async {
             self.statusImageView.image = UIImage(named: "approov")
             self.statusTextView.text = "Checking connectivity..."
         }
-        var request = URLRequest(url: helloURL)
+        let helloURL = URL(string: "https://shapes.approov.io/v1/hello")!
+        let request = URLRequest(url: helloURL)
         let task = defaultSession.dataTask(with: request) { (data, response, error) in
             let message: String
             let image: UIImage?
@@ -76,7 +88,7 @@ class ViewController: UIViewController {
                 }
             } else {
                 // other networking failure
-                message = "Unknown networking error"
+                message = "Networking error: \(error!.localizedDescription)"
                 image = UIImage(named: "confused")
             }
             
@@ -90,23 +102,16 @@ class ViewController: UIViewController {
         }
         
         task.resume()
-        
     }
     
     
     // Check Approov-protected shapes endpoint
     @IBAction func checkShape() {
-        //*** COMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
-        let currentShapesEndpoint = "v1"
-        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
-        //let currentShapesEndpoint = "v3"
-        let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
-
-        // Display busy screen
         DispatchQueue.main.async {
             self.statusImageView.image = UIImage(named: "approov")
             self.statusTextView.text = "Checking app authenticity..."
         }
+        let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
         var request = URLRequest(url: shapesURL)
         request.setValue(apiSecretKey, forHTTPHeaderField: "Api-Key")
         let task = defaultSession.dataTask(with: request) { (data, response, error) in
@@ -119,11 +124,12 @@ class ViewController: UIViewController {
                     let code = httpResponse.statusCode
                     if code == 200 {
                         // successful http response
-                        message = "\(code): Approoved!"
+                        message = "\(code)"
                         // unmarshal the JSON response
                         do {
                             let jsonObject = try JSONSerialization.jsonObject(with: data!, options: [])
                             let jsonDict = jsonObject as? [String: Any]
+                            message = (jsonDict!["status"] as! String)
                             let shape = (jsonDict!["shape"] as? String)!.lowercased()
                             switch shape {
                             case "circle":
@@ -135,7 +141,7 @@ class ViewController: UIViewController {
                             case "triangle":
                                 image = UIImage(named: "Triangle")
                             default:
-                                message = "\(code): Approoved: unknown shape '\(shape)'"
+                                message = "\(code): unknown shape '\(shape)'"
                                 image = UIImage(named: "confused")
                             }
                         } catch {
@@ -169,7 +175,5 @@ class ViewController: UIViewController {
         }
     
         task.resume()
-
     }
-
 }
