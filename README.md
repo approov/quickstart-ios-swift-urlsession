@@ -6,12 +6,16 @@ This quickstart provides the basic steps for integrating Approov into your app. 
 
 To follow this guide you should have received an onboarding email for a trial or paid Approov account.
 
+Note that the minimum requirement is iOS 10. You cannot use Approov in apps that support iOS versions older than this.
+
 ## ADDING APPROOV SERVICE DEPENDENCY
-The Approov integration is available via the [`Swift Package Manager`](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). This allows inclusion into the project by simply specifying a dependency in the `Add Package Dependency` Xcode option:
+The Approov integration is available via the [`Swift Package Manager`](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). This allows inclusion into the project by simply specifying a dependency in the `File -> Add Packages...` Xcode option if the project is selected:
 
 ![Add Package Dependency](readme-images/AddPackage.png)
 
-This package is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk). The latest available version is `3.0.2`.
+Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter `3.0.3`.
+
+Once you click `Add Package` the last step will confirm the package product and target selection. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
 
 ## USING APPROOV SERVICE
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional Approov attestation calls. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` construction calls with `ApproovURLSession`. 
@@ -58,4 +62,4 @@ If you wish to use an Approov protected version then please call `dataTaskPublis
 Note also that the methods related to `Performing Asynchronous Transfers` (introduced at iOS 15) do not currently provide Approov protection.
 
 ## BITCODE SUPPORT
-The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use `3.0.2-bitcode` since this is the latest bitcode enabled version.
+The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use `3.0.3-bitcode` since this is the latest bitcode enabled version.

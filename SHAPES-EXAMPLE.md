@@ -5,9 +5,9 @@ This quickstart is written specifically for native iOS apps that are written in 
 ## WHAT YOU WILL NEED
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
-* [Xcode](https://developer.apple.com/xcode/) version 13 installed (version 13.3 is used in this guide)
+* [Xcode](https://developer.apple.com/xcode/) installed (version 13.4.1 is used in this guide)
+* An iOS mobile device or simulator with iOS 10 or higher
 * The contents of this repo
-* An Apple mobile device with iOS 10 or higher
 
 ## RUNNING THE SHAPES APP WITHOUT APPROOV
 
@@ -41,24 +41,26 @@ The subsequent steps of this guide show you how to provide better protection, ei
 
 ## ADD THE APPROOV SERVICE URLSESSION
 
-Get the latest `approov-service-urlsession` by using `swift package manager`. The repository located at `https://github.com/approov/approov-service-urlsession.git` includes as a dependency the closed source Approov SDK and includes tags pointing to the relevant Approov SDK release versions. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with URLSession.
+The Approov integration is available via the [`Swift Package Manager`](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). This allows inclusion into the project by simply specifying a dependency in the `File -> Add Packages...` Xcode option if the project is selected:
 
-Install the dependency by selecting the `ApproovShapes` project in Xcode and then selecting `File`, `Add Packages` and enter in the search box the url of the git repository `https://github.com/approov/approov-service-urlsession.git`. You will then have to select the relevant `approov-service-urlsession` version you wish to use; each version is identified by a tag, with the main branch usually pointing to the latest version. Select the `version` option and enter the desired one, in this case `3.0.2`:
+![Add Packag Dependency](readme-images/AddPackage.png)
 
-![Set SDK Version](readme-images/AddPackage.png)
+Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter `3.0.3`.
 
-Once you click `Add Package` the last screen will confirm the package product and target selection:
+Once you click `Add Package` the last step will confirm the package product and target selection:
 
 ![Target Selection](readme-images/target-selection.png)
 
-The `approov-service-urlsession` is now included as a dependency in your project.
+ The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
 
 ## ENSURE THE SHAPES API IS ADDED
 
 In order for Approov tokens to be generated for `https://shapes.approov.io/v2/shapes` it is necessary to inform Approov about it:
+
 ```
 $ approov api -add shapes.approov.io
 ```
+
 Tokens for this domain will be automatically signed with the specific secret for this domain, rather than the normal one for your account.
 
 ## MODIFY THE APP TO USE APPROOV
@@ -107,7 +109,9 @@ $ approov registration -add ApproovShapes.ipa
 
 ## RUNNING THE SHAPES APP WITH APPROOV
 
-Install the `ApproovShapes.ipa` that you just registered on the device. You will need to remove the old app from the device first. If you are using an emulator, you will need to learn how to ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) since the simulators are not real devices and you will not be able to succesfully authenticate the app.
+Install the `ApproovShapes.ipa` that you just registered on the device. You will need to remove the old app from the device first.
+
+If you are using a simulator you will need to ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) since the simulators are not real devices and you will ne rejected by Approov.
 
 Simply drag the `ipa` file to the device. Alternatively you can select `Window`, then `Devices and Simulators` and after selecting your device click on the small `+` sign to locate the `ipa` archive you would like to install.
 
@@ -127,7 +131,7 @@ If you still don't get a valid shape then there are some things you can try. Rem
 
 * Ensure that the version of the app you are running is exactly the one you registered with Approov.
 * If you running the app from a debugger then valid tokens are not issued unless you have ensure your device [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy).
-* Look at the [`syslog`](https://developer.apple.com/documentation/os/logging) output from the device. Information about any Approov token fetched or an error is logged. You can easily [check](https://approov.io/docs/latest/approov-usage-documentation/#loggable-tokens) the validity.
+* Look at the console output from the device using the [Console](https://support.apple.com/en-gb/guide/console/welcome/mac) app from MacOS. This provides console output for a connected simulator or physical device. Select the device and search for `ApproovService` to obtain specific logging related to Approov. This will show lines including the loggable form of any tokens obtained by the app. You can easily [check](https://approov.io/docs/latest/approov-usage-documentation/#loggable-tokens) the validity and find out any reason for a failure.
 * You can use a debugger or simulator and get valid Approov tokens on a specific device by ensuring it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy). As a shortcut, when you are first setting up, you can add a [device security policy](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) using the `latest` shortcut as discussed so that the `device ID` doesn't need to be extracted from the logs or an Approov token.
 * Consider using an [Annotation Policy](https://approov.io/docs/latest/approov-usage-documentation/#annotation-policies) during development to directly see why the device is not being issued with a valid token.
 * Use `approov metrics` to see [Live Metrics](https://approov.io/docs/latest/approov-usage-documentation/#live-metrics) of the cause of failure.
