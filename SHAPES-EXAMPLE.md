@@ -81,7 +81,7 @@ var defaultSession = ApproovURLSession(configuration: .default)
 Now locate and uncomment the line inside the `viewDidLoad` function that initializes the `ApproovService` and remember to add the `config` parameter. The `approov-service-urlsession` needs a configuration string to identify the account associated with the app. You will have received this in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`):
 
 ```swift
-try! ApproovService.initialize(config: "<enter-you-config-string-here>")
+try! ApproovService.initialize(config: "<enter-your-config-string-here>")
 ```
 
 The `ApproovURLSession` class adds the `Approov-Token` header and also applies pinning for the connections to ensure that no Man-in-the-Middle can eavesdrop on any communication being made.
