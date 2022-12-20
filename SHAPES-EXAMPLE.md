@@ -45,7 +45,7 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Packag Dependency](readme-images/AddPackage.png)
 
-Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter `3.0.3`.
+Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one.
 
 Once you click `Add Package` the last step will confirm the package product and target selection:
 
