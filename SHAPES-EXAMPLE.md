@@ -93,6 +93,8 @@ Lastly, make sure we are using the Approov protected endpoint for the shapes ser
 let currentShapesEndpoint = "v3"
 ```
 
+> Note that from Xcode 14, the minimum deployment target is iOS 11.0 and you will need to update to this in the general settings to allow compilation.
+
 ## REGISTER YOUR APP WITH APPROOV
 
 In order for Approov to recognize the app as being valid it needs to be registered with the service. This requires building an `.ipa` file using the `Archive` option of Xcode (this option will not be available if using the simulator). Make sure a `Generic iOS Device` is selected as build destination. This ensures an `embedded.mobileprovision` is included in the application package which is a requirement for the `approov` command line tool. 
