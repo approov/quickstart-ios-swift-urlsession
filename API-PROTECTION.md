@@ -16,10 +16,13 @@ Note that this will also add a public key certicate pin for connections to the d
 > **NOTE:** By default a symmetric account key is used to sign the Approov token (HS256 algorithm), so that all API domains will share the same signing secret. Alternatively, it is possible to use a [keyset key](https://approov.io/docs/latest/approov-usage-documentation/#managing-key-sets) which may differ for each API domain and for which a wide range of different signing algorithms and key types are available. This requires you to first [add a new key](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-new-key), and then specify it when [adding each API domain](https://approov.io/docs/latest/approov-usage-documentation/#keyset-key-api-addition). Note that this will impact how you verify the token on your API backend.
 
 ## REGISTERING APPS
-In order for Approov to recognize the app as being valid it needs to be registered with the service. In order for Approov to recognize the app as being valid it needs to be registered with the service. Change to the directory containing your app and then register it with Approov:
+In order for Approov to recognize the app as being valid it needs to be registered with the service. Extract the [IPA](https://approov.io/docs/latest/approov-usage-documentation/#ios-ipa-extraction) and then register it with Approov:
+
 ```
-approov registration -add YourApp.ipa
+approov registration -add /path/to/your/app.ipa
 ```
+
+If you are building and running on an iOS simulator then there will be no `.ipa` file and you must ensure the app [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your simulator without needing to perform a registration.
 
 > **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time has elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device to not have to register the IPA each time you modify it.
 

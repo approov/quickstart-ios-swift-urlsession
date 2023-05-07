@@ -70,11 +70,13 @@ ApproovService.addSubstitutionQueryParam(key: "your-param")
 After this the `ApproovURLSession` should transform any instance of a URL such as `https://your.domain/endpoint?your-param=your-placeholder` into `https://your.domain/endpoint?your-param=your-secret`.
 
 ## REGISTERING APPS
-In order for Approov to recognize the app as being valid it needs to be registered with the service. In order for Approov to recognize the app as being valid it needs to be registered with the service. Change to the directory containing your app and then register it with Approov:
+In order for Approov to recognize the app as being valid it needs to be registered with the service. Extract the [IPA](https://approov.io/docs/latest/approov-usage-documentation/#ios-ipa-extraction) and then register it with Approov:
 
-```Bash
-approov registration -add YourApp.ipa
 ```
+approov registration -add /path/to/your/app.ipa
+```
+
+If you are building and running on an iOS simulator then there will be no `.ipa` file and you must ensure the app [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your simulator without needing to perform a registration.
 
 > **IMPORTANT:** The registration takes up to 30 seconds to propagate across the Approov Cloud Infrastructure, therefore don't try to run the app again before this time has elapsed. During development of your app you can ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) on your device to not have to register the IPA each time you modify it.
 
