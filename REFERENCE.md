@@ -9,7 +9,7 @@ Various methods may throw an `ApproovError` if there is a problem. The enumerati
 
 If a method throws an `ApproovError.rejectionError`, then this indicates the problem was that the app failed attestation. An additional associated value `ARC` provides the [Attestation Response Code](https://approov.io/docs/latest/approov-usage-documentation/#attestation-response-code), which could be provided to the user for communication with your app support to determine the reason for failure, without this being revealed to the end user. The associated value `rejectionReasons` provides the [Rejection Reasons](https://approov.io/docs/latest/approov-usage-documentation/#rejection-reasons) if the feature is enabled, providing a comma separated list of reasons why the app attestation was rejected.
 
-## Initialize
+## initialize
 Initializes the Approov SDK and thus enables the Approov features. The `config` will have been provided in the initial onboarding or email or can be [obtained using the Approov CLI](https://approov.io/docs/latest/approov-usage-documentation/#getting-the-initial-sdk-configuration). This will generate an error if a second attempt is made at initialization with a different `config`.
 
 ```swift
@@ -18,7 +18,7 @@ public static func initialize(config: String) throws
 
 It is possible to pass an empty `config` string to indicate that no initialization is required. Only do this if you are also using a different Approov quickstart in your app (which will use the same underlying Approov SDK) and this will have been initialized first.
 
-## proceedOnNetworkFail
+## setProceedOnNetworkFail
 If `proceedOnNetworkFail` is set to `true` then this indicates that the networking should proceed anyway if it is not possible to obtain an Approov token due to a networking failure. If this is called then the backend API can receive calls without the expected Approov token header being added, or without header substitutions being made. This should only ever be used if there is some particular reason, perhaps due to local network conditions, that you believe that traffic to the Approov cloud service will be particularly problematic.
 
 ```swift
@@ -27,7 +27,7 @@ public static func setProceedOnNetworkFailure(proceed: Bool)
 
 Note that this should be used with *CAUTION* because it may allow a connection to be established before any dynamic pins have been received via Approov, thus potentially opening the channel to a MitM.
 
-## approovTokenHeaderAndPrefix
+## setApproovHeader
 Allows to set the name of the header (`approovTokenHeader`) that the Approov token is added on, as well as an optional `prefix` String (such as "`Bearer `"). Set `approovTokenPrefix` to the empty string if it is not required. By default the token is provided on `Approov-Token` with no prefix.
 
 ```swift
@@ -67,6 +67,22 @@ Removes a query parameter key name previously added using `addSubstitutionQueryP
 
 ```swift
 public static func removeSubstitutionQueryParam(key: String)
+```
+
+## AddExclusionURLRegex
+Adds an exclusion URL [regular expression](https://regex101.com/) via the `urlRegex` parameter. If a URL for a request matches this regular expression then it will not be subject to any Approov protection.
+
+```swift
+public static func addExclusionURLRegex(urlRegex: String)
+```
+
+Note that this facility must be used with *EXTREME CAUTION* due to the impact of dynamic pinning. Pinning may be applied to all domains added using Approov, and updates to the pins are received when an Approov fetch is performed. If you exclude some URLs on domains that are protected with Approov, then these will be protected with Approov pins but without a path to update the pins until a URL is used that is not excluded. Thus you are responsible for ensuring that there is always a possibility of calling a non-excluded URL, or you should make an explicit call to fetchToken if there are persistent pinning failures. Conversely, use of those option may allow a connection to be established before any dynamic pins have been received via Approov, thus potentially opening the channel to a MitM.
+
+## RemoveExclusionURLRegex
+Removes an exclusion URL regular expression (`urlRegex`) previously added using `addExclusionURLRegex`.
+
+```swift
+public static func removeExclusionURLRegex(urlRegex: String)
 ```
 
 ## prefetch
