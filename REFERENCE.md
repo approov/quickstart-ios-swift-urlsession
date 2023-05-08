@@ -69,7 +69,7 @@ Removes a query parameter key name previously added using `addSubstitutionQueryP
 public static func removeSubstitutionQueryParam(key: String)
 ```
 
-## AddExclusionURLRegex
+## addExclusionURLRegex
 Adds an exclusion URL [regular expression](https://regex101.com/) via the `urlRegex` parameter. If a URL for a request matches this regular expression then it will not be subject to any Approov protection.
 
 ```swift
@@ -78,7 +78,7 @@ public static func addExclusionURLRegex(urlRegex: String)
 
 Note that this facility must be used with *EXTREME CAUTION* due to the impact of dynamic pinning. Pinning may be applied to all domains added using Approov, and updates to the pins are received when an Approov fetch is performed. If you exclude some URLs on domains that are protected with Approov, then these will be protected with Approov pins but without a path to update the pins until a URL is used that is not excluded. Thus you are responsible for ensuring that there is always a possibility of calling a non-excluded URL, or you should make an explicit call to fetchToken if there are persistent pinning failures. Conversely, use of those option may allow a connection to be established before any dynamic pins have been received via Approov, thus potentially opening the channel to a MitM.
 
-## RemoveExclusionURLRegex
+## removeExclusionURLRegex
 Removes an exclusion URL regular expression (`urlRegex`) previously added using `addExclusionURLRegex`.
 
 ```swift
