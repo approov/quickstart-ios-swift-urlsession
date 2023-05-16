@@ -62,4 +62,4 @@ If you wish to use an Approov protected version then please call `dataTaskPublis
 Note also that the methods related to `Performing Asynchronous Transfers` (introduced at iOS 15) do not currently provide Approov protection.
 
 ## BITCODE SUPPORT
-The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use `3.1.2-bitcode` since this is the latest bitcode enabled version.
+The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use the latest version ending `-bitcode`.

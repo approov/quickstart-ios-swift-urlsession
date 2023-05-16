@@ -55,7 +55,7 @@ Once you click `Add Package` the last step will confirm the package product and 
 
 ## ENSURE THE SHAPES API IS ADDED
 
-In order for Approov tokens to be generated for `https://shapes.approov.io/v2/shapes` it is necessary to inform Approov about it:
+In order for Approov tokens to be generated for `https://shapes.approov.io/v3/shapes` it is necessary to inform Approov about it:
 
 ```
 approov api -add shapes.approov.io
