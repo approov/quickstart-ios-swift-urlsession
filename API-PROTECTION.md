@@ -79,7 +79,8 @@ Here is an example of calling the appropriate method in `ApproovService`:
 do {
     try ApproovService.precheck()
 } catch ApproovError.rejectionError(let message, let ARC, let rejectionReasons) {
-    // failure due to the attestation being rejected, the ARC and rejectionReasons objects contain additional information
+    // failure due to the attestation being rejected, the ARC and rejectionReasons objects
+    // contain additional information
 } catch ApproovError.networkingError(let message) {
     // we are unable to perform the precheck due to network conditions so the request can
     // be retried by the user later
