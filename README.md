@@ -2,7 +2,7 @@
 
 This quickstart is written specifically for native iOS apps that are written in Swift and making API calls using [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) that you wish to protect with Approov. If this is not your situation then check if there is a more relevant quickstart guide available.
 
-This quickstart provides the basic steps for integrating Approov into your app. A more detailed step-by-step guide using a [Shapes App Example](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SHAPES-EXAMPLE.md) is also available.
+This page provides all the steps for integrating Approov into your app. Additionally, a step-by-step tutorial guide using our [Shapes App Example](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SHAPES-EXAMPLE.md) is also available.
 
 To follow this guide you should have received an onboarding email for a trial or paid Approov account.
 
@@ -61,6 +61,3 @@ The version of [`dataTaskPublisher(for:)`](https://developer.apple.com/documenta
 If you wish to use an Approov protected version then please call `dataTaskPublisherApproov` instead. Note though that this method may block when it is called when requesting network communication with the Approov cloud. Therefore you shouldn't call this method from the main UI thread.
 
 Note also that the methods related to `Performing Asynchronous Transfers` (introduced at iOS 15) do not currently provide Approov protection.
-
-## BITCODE SUPPORT
-The `ApproovService` swift package provides different versions with and without `bitcode` support. If you would like to support `bitcode` in your application, you should install a version of the `ApproovService` that supports it as well. You should use the latest version ending `-bitcode`.

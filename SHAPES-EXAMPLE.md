@@ -95,31 +95,31 @@ let currentShapesEndpoint = "v3"
 
 > Note that from Xcode 14, the minimum deployment target is iOS 11.0 and you will need to update to this in the general settings to allow compilation.
 
-## REGISTER YOUR APP WITH APPROOV
+## ADD YOUR SIGNING CERTIFICATE TO APPROOV
 
-In order for Approov to recognize the app as being valid it needs to be registered with the service. This requires building an `.ipa` file using the `Archive` option of Xcode (this option will not be available if using the simulator). Make sure a `Generic iOS Device` is selected as build destination. This ensures an `embedded.mobileprovision` is included in the application package which is a requirement for the `approov` command line tool. 
+You should add the signing certificate used to sign apps. These are available in your Apple development account portal. Go to the initial screen showing program resources:
 
-![Target Device](readme-images/target-device.png)
+![Apple Program Resources](readme-images/program-resources.png)
 
-We can now build the application by selecting `Product` and then `Archive`. Select the appropriate code signing options and eventually a destination to save the `.ipa` file.
+Click on `Certificates` and you will be presented with the full list of development and distribution certificates for the account. Click on the certificate being used to sign applications from your particular Xcode installation and you will be presented with the following dialog:
 
-Copy the `ApproovShapes.ipa` file to a convenient working directory. Register the app with Approov:
+![Download Certificate](readme-images/download-cert.png)
+
+Now click on the `Download` button and a file with a `.cer` extension is downloaded, e.g. `development.cer`. Add it to Approov with:
 
 ```
-approov registration -add ApproovShapes.ipa
+approov appsigncert -add development.cer -autoReg
 ```
+
+This ensures that any app signed with the certificate will be recognized by Approov.
+
+If it is not possible to download the correct certificate from the portal then it is also possible to [add app signing certificates from the app](https://approov.io/docs/latest/approov-usage-documentation/#adding-apple-app-signing-certificates-from-app).
+
+> **IMPORTANT:** Apps built to run on the iOS simulator are not code signed and thus auto-registration does not work for them. In this case you can consider [forcing a device ID to pass](https://approov.io/docs/latest/approov-usage-documentation/#forcing-a-device-id-to-pass) to get a valid attestation.
 
 ## RUNNING THE SHAPES APP WITH APPROOV
 
-Install the `ApproovShapes.ipa` that you just registered on the device. You will need to remove the old app from the device first.
-
-If you are using a simulator you will need to ensure it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) since the simulators are not real devices and you will ne rejected by Approov.
-
-Simply drag the `ipa` file to the device. Alternatively you can select `Window`, then `Devices and Simulators` and after selecting your device click on the small `+` sign to locate the `ipa` archive you would like to install.
-
-![Install IPA Xcode](readme-images/install-ipa.png)
-
-Launch the app and press the `Shape` button. You should now see this (or another shape):
+Run the app (without any debugger attached) and press the `Shape` button. You should now see this (or another shape):
 
 <p>
     <img src="readme-images/shape-approoved.png" width="256" title="Shape Approoved">
@@ -131,11 +131,10 @@ This means that the app is getting a validly signed Approov token to present to 
 
 If you still don't get a valid shape then there are some things you can try. Remember this may be because the device you are using has some characteristics that cause rejection for the currently set [Security Policy](https://approov.io/docs/latest/approov-usage-documentation/#security-policies) on your account:
 
-* Ensure that the version of the app you are running is exactly the one you registered with Approov.
+* Ensure that the version of the app you are running is signed with the correct certificate.
 * If you running the app from a debugger then valid tokens are not issued unless you have ensure your device [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy).
 * Look at the console output from the device using the [Console](https://support.apple.com/en-gb/guide/console/welcome/mac) app from MacOS. This provides console output for a connected simulator or physical device. Select the device and search for `ApproovService` to obtain specific logging related to Approov. This will show lines including the loggable form of any tokens obtained by the app. You can easily [check](https://approov.io/docs/latest/approov-usage-documentation/#loggable-tokens) the validity and find out any reason for a failure.
-* You can use a debugger or simulator and get valid Approov tokens on a specific device by ensuring it [always passes](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy). As a shortcut, when you are first setting up, you can add a [device security policy](https://approov.io/docs/latest/approov-usage-documentation/#adding-a-device-security-policy) using the `latest` shortcut as discussed so that the `device ID` doesn't need to be extracted from the logs or an Approov token.
-* Consider using an [Annotation Policy](https://approov.io/docs/latest/approov-usage-documentation/#annotation-policies) during development to directly see why the device is not being issued with a valid token.
+* You can use a debugger or simulator and get valid Approov tokens on a specific device by ensuring you are [forcing a device ID to pass](https://approov.io/docs/latest/approov-usage-documentation/#forcing-a-device-id-to-pass). As a shortcut, when you can use the `latest` shortcut as discussed so that the `device ID` doesn't need to be extracted from the logs or an Approov token.
 * Use `approov metrics` to see [Live Metrics](https://approov.io/docs/latest/approov-usage-documentation/#live-metrics) of the cause of failure.
 * Inspect any exceptions for additional information
 
@@ -150,21 +149,13 @@ The `apiSecretKey` variable also needs to be changed as follows, removing the ac
 let apiSecretKey = "shapes_api_key_placeholder"
 ```
 
-Next we enable the [Secure Strings](https://approov.io/docs/latest/approov-usage-documentation/#secure-strings) feature:
-
-```
-approov secstrings -setEnabled
-```
-
-> Note that this command requires an [admin role](https://approov.io/docs/latest/approov-usage-documentation/#account-access-roles).
-
 You must inform Approov that it should map `shapes_api_key_placeholder` to `yXClypapWNHIifHUWmBIyPFAm` (the actual API key) in requests as follows:
 
 ```
 approov secstrings -addKey shapes_api_key_placeholder -predefinedValue yXClypapWNHIifHUWmBIyPFAm
 ```
 
-> Note that this command also requires an [admin role](https://approov.io/docs/latest/approov-usage-documentation/#account-access-roles).
+> Note that this command requires an [admin role](https://approov.io/docs/latest/approov-usage-documentation/#account-access-roles).
 
 Next we need to inform Approov that it needs to substitute the placeholder value for the real API key on the `Api-Key` header. Find the line below and uncomment it:
 
@@ -175,15 +166,10 @@ ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
 
 This processes the headers and replaces in the actual API key as required.
 
-Build and run the app again to ensure that the `ApproovShapes.ipa` in the generated build outputs is up to date. You need to register the updated app with Approov. Using the command line register the app with:
-
-```
-approov registration -add ApproovShapes.ipa
-```
-Run the app again without making any changes to the app and press the `Get Shape` button. You should now see this (or another shape):
+Run the app again and press the `Get Shape` button. You should now see this (or another shape):
 
 <p>
     <img src="readme-images/shape.png" width="256" title="Shape">
 </p>
 
-This means that the registered app is able to access the API key, even though it is no longer embedded in the app code, and provide it to the shapes request.
+This means that the app is able to access the API key, even though it is no longer embedded in the app code, and provide it to the shapes request.
