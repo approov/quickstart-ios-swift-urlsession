@@ -30,8 +30,8 @@ Note that this should be used with *CAUTION* because it may allow a connection t
 ## setDevKey
 [Sets a development key](https://approov.io/docs/latest/approov-usage-documentation/#using-a-development-key) in order to force an app to be passed. This can be used if the app has to be resigned in a test environment and would thus fail attestation otherwise.
 
-```ObjectiveC
-+ (void)setDevKey:(NSString *)devKey;
+```swift
+public static func setDevKey(devKey: String)
 ```
 
 ## setApproovHeader
