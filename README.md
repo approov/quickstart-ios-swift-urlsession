@@ -61,11 +61,16 @@ The version of [`dataTaskPublisher(for:)`](https://developer.apple.com/documenta
 If you wish to use an Approov protected version then please call `dataTaskPublisherApproov` instead. Note though that this method may block when it is called when requesting network communication with the Approov cloud. Therefore you shouldn't call this method from the main UI thread.
 
 ## AWAIT-ASYNC ASYNCHRONOUS TRANSFERS
-Note that the methods related to [`Performing Asynchronous Transfers`](https://developer.apple.com/documentation/foundation/urlsession#3842971) (introduced in iOS 15, and discussed in [Using URLSession’s async/await-powered APIs](https://wwdcbysundell.com/2021/using-async-await-with-urlsession/)) should not be called directly and do not provide Approov protection. This is because they are defined in an `extension` to `URLSession` and cannot be overridden by the Approov implementation. Instead various of the methods are provided with an identical method signature but have a `WithApproov` suffix in their name. The supported methods are as follows:
+Note that the methods related to [Performing Asynchronous Transfers](https://developer.apple.com/documentation/foundation/urlsession#3842971) (introduced in iOS 15, and discussed in [Using URLSession’s async/await-powered APIs](https://wwdcbysundell.com/2021/using-async-await-with-urlsession/)) should not be called directly and do not provide Approov protection. This is because they are defined in an `extension` to `URLSession` and cannot be overridden by the Approov implementation. Instead various of the methods are provided with an identical method signature but have a `WithApproov` suffix in their name. The supported methods are as follows:
 
 `dataWithApproov(for request: URLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse)`
+
 `dataWithApproov(from url: URL, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse)`
+
 `uploadWithApproov(for request: URLRequest, fromFile fileURL: URL, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse)`
+
 `uploadWithApproov(for request: URLRequest, from bodyData: Data, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse)`
+
 `downloadWithApproov(for request: URLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> (URL, URLResponse)`
+
 `downloadWithApproov(from url: URL, delegate: URLSessionTaskDelegate? = nil) async throws -> (URL, URLResponse)`
