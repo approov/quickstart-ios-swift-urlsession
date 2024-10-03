@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17D1FF542CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		846743E721EFD27A00EEE48A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846743E621EFD27A00EEE48A /* Assets.xcassets */; };
 		8475651821EFCC4A0094ED94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475651721EFCC4A0094ED94 /* AppDelegate.swift */; };
 		8475651A21EFCC4A0094ED94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475651921EFCC4A0094ED94 /* ViewController.swift */; };
@@ -14,7 +15,28 @@
 		8475652221EFCC4B0094ED94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8475652021EFCC4B0094ED94 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		17D1FF552CAEB6A100F0B8A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8475650C21EFCC4A0094ED94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17D1FF522CAEB6A100F0B8A6;
+			remoteInfo = "ShapesWatchApp Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		17D1FF632CAEB6A200F0B8A6 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				17D1FF542CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D2E8011220B1A370045914F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -28,6 +50,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		17D1FF4E2CAEB6A100F0B8A6 /* ShapesWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapesWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ShapesWatchApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		846743E621EFD27A00EEE48A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8475651421EFCC4A0094ED94 /* ApproovShapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApproovShapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8475651721EFCC4A0094ED94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +61,18 @@
 		8475652321EFCC4B0094ED94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "ShapesWatchApp Watch App"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		17D1FF502CAEB6A100F0B8A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8475651121EFCC4A0094ED94 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				8475651621EFCC4A0094ED94 /* ApproovShapes */,
+				17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */,
 				8475651521EFCC4A0094ED94 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				8475651421EFCC4A0094ED94 /* ApproovShapes.app */,
+				17D1FF4E2CAEB6A100F0B8A6 /* ShapesWatchApp.app */,
+				17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +118,47 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17D1FF4D2CAEB6A100F0B8A6 /* ShapesWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17D1FF672CAEB6A200F0B8A6 /* Build configuration list for PBXNativeTarget "ShapesWatchApp" */;
+			buildPhases = (
+				17D1FF4C2CAEB6A100F0B8A6 /* Resources */,
+				17D1FF632CAEB6A200F0B8A6 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17D1FF562CAEB6A100F0B8A6 /* PBXTargetDependency */,
+			);
+			name = ShapesWatchApp;
+			packageProductDependencies = (
+			);
+			productName = ShapesWatchApp;
+			productReference = 17D1FF4E2CAEB6A100F0B8A6 /* ShapesWatchApp.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		17D1FF522CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17D1FF662CAEB6A200F0B8A6 /* Build configuration list for PBXNativeTarget "ShapesWatchApp Watch App" */;
+			buildPhases = (
+				17D1FF4F2CAEB6A100F0B8A6 /* Sources */,
+				17D1FF502CAEB6A100F0B8A6 /* Frameworks */,
+				17D1FF512CAEB6A100F0B8A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */,
+			);
+			name = "ShapesWatchApp Watch App";
+			packageProductDependencies = (
+			);
+			productName = "ShapesWatchApp Watch App";
+			productReference = 17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8475651321EFCC4A0094ED94 /* ApproovShapes */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8475652621EFCC4B0094ED94 /* Build configuration list for PBXNativeTarget "ApproovShapes" */;
@@ -104,10 +183,16 @@
 		8475650C21EFCC4A0094ED94 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Approov;
 				TargetAttributes = {
+					17D1FF4D2CAEB6A100F0B8A6 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					17D1FF522CAEB6A100F0B8A6 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					8475651321EFCC4A0094ED94 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1130;
@@ -128,11 +213,27 @@
 			projectRoot = "";
 			targets = (
 				8475651321EFCC4A0094ED94 /* ApproovShapes */,
+				17D1FF4D2CAEB6A100F0B8A6 /* ShapesWatchApp */,
+				17D1FF522CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17D1FF4C2CAEB6A100F0B8A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17D1FF512CAEB6A100F0B8A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8475651221EFCC4A0094ED94 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,6 +247,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17D1FF4F2CAEB6A100F0B8A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8475651021EFCC4A0094ED94 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +264,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		17D1FF562CAEB6A100F0B8A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17D1FF522CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */;
+			targetProxy = 17D1FF552CAEB6A100F0B8A6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8475651B21EFCC4A0094ED94 /* Main.storyboard */ = {
@@ -177,6 +293,120 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		17D1FF612CAEB6A200F0B8A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 653V7L98XW;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				INFOPLIST_KEY_CFBundleDisplayName = ShapesWatchApp;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.approov.ShapesWatchApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		17D1FF622CAEB6A200F0B8A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 653V7L98XW;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				INFOPLIST_KEY_CFBundleDisplayName = ShapesWatchApp;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.approov.ShapesWatchApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		17D1FF642CAEB6A200F0B8A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ShapesWatchApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 653V7L98XW;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ShapesWatchApp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.approov.ShapesWatchApp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.7;
+			};
+			name = Debug;
+		};
+		17D1FF652CAEB6A200F0B8A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ShapesWatchApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 653V7L98XW;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ShapesWatchApp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.approov.ShapesWatchApp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.7;
+			};
+			name = Release;
+		};
 		8475652421EFCC4B0094ED94 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -361,6 +591,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17D1FF662CAEB6A200F0B8A6 /* Build configuration list for PBXNativeTarget "ShapesWatchApp Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17D1FF642CAEB6A200F0B8A6 /* Debug */,
+				17D1FF652CAEB6A200F0B8A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17D1FF672CAEB6A200F0B8A6 /* Build configuration list for PBXNativeTarget "ShapesWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17D1FF612CAEB6A200F0B8A6 /* Debug */,
+				17D1FF622CAEB6A200F0B8A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8475650F21EFCC4A0094ED94 /* Build configuration list for PBXProject "ApproovShapes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -1,27 +1,29 @@
 # Shapes Example
 
-This quickstart is written specifically for native iOS apps that are written in Swift for making the API calls that you wish to protect with Approov. This quickstart provides a step-by-step example of integrating Approov into an app using a simple `Shapes` example that shows a geometric shape based on a request to an API backend that can be protected with Approov.
+This quickstart is written specifically for native iOS and watchOS apps that are written in Swift for making the API calls that you wish to protect with Approov. This quickstart provides a step-by-step example of integrating Approov into an app using a simple `Shapes` example that shows a geometric shape based on a request to an API backend that can be protected with Approov.
 
 ## WHAT YOU WILL NEED
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
-* [Xcode](https://developer.apple.com/xcode/) installed (version 13.4.1 is used in this guide)
-* An iOS mobile device or simulator with iOS 12 or higher
+* [Xcode](https://developer.apple.com/xcode/) installed (version 16.0 is used in this guide)
+* An iOS mobile device or simulator with iOS 12 or higher or a watchOS device with watchOS 7.0 or higher
 * The contents of this repo
 
 ## RUNNING THE SHAPES APP WITHOUT APPROOV
 
 Open the `ApproovShapes.xcodeproj` project in the `shapes-app` folder using `File->Open` in Xcode. Ensure the `ApproovShapes` project is selected at the top of Xcode's project explorer panel.
 
-Select your codesigning certificate in the `Signing & Capabilities` tab and run the application on your prefered device.
+Select your code signing certificate in the `Signing & Capabilities` tab and run the application on your preferred device.
 
 ![Codesign App](readme-images/codesign-app.png)
 
 Once the application is running you will see two buttons:
 
-<p>
-    <img src="readme-images/app-startup.png" width="256" title="Shapes App Startup">
-</p>
+<div style="display: flex; justify-content: space-between;">
+    <img src="readme-images/first-image.png" width="256" title="First Image Title">
+    <img src="readme-images/watch-app-startup.png" width="256" title="Shapes App Startup">
+</div>
+
 
 Click on the `Hello` button and you should see this:
 
