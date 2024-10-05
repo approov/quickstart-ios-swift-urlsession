@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		17D1FF542CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		17D1FFDA2CB1A15500F0B8A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */; };
+		17D1FFDB2CB1A15500F0B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD62CB1A15500F0B8A6 /* Assets.xcassets */; };
+		17D1FFDC2CB1A15500F0B8A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1FFD72CB1A15500F0B8A6 /* ContentView.swift */; };
+		17D1FFDD2CB1A15500F0B8A6 /* ShapesWatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1FFD82CB1A15500F0B8A6 /* ShapesWatchAppApp.swift */; };
 		846743E721EFD27A00EEE48A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846743E621EFD27A00EEE48A /* Assets.xcassets */; };
 		8475651821EFCC4A0094ED94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475651721EFCC4A0094ED94 /* AppDelegate.swift */; };
 		8475651A21EFCC4A0094ED94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475651921EFCC4A0094ED94 /* ViewController.swift */; };
@@ -52,6 +56,10 @@
 /* Begin PBXFileReference section */
 		17D1FF4E2CAEB6A100F0B8A6 /* ShapesWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapesWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ShapesWatchApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		17D1FFD62CB1A15500F0B8A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17D1FFD72CB1A15500F0B8A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		17D1FFD82CB1A15500F0B8A6 /* ShapesWatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesWatchAppApp.swift; sourceTree = "<group>"; };
 		846743E621EFD27A00EEE48A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8475651421EFCC4A0094ED94 /* ApproovShapes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApproovShapes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8475651721EFCC4A0094ED94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,10 +68,6 @@
 		8475652121EFCC4B0094ED94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8475652321EFCC4B0094ED94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "ShapesWatchApp Watch App"; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		17D1FF502CAEB6A100F0B8A6 /* Frameworks */ = {
@@ -83,11 +87,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17D1FFD52CB1A15500F0B8A6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		17D1FFD92CB1A15500F0B8A6 /* ShapesWatchApp Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				17D1FFD52CB1A15500F0B8A6 /* Preview Content */,
+				17D1FFD62CB1A15500F0B8A6 /* Assets.xcassets */,
+				17D1FFD72CB1A15500F0B8A6 /* ContentView.swift */,
+				17D1FFD82CB1A15500F0B8A6 /* ShapesWatchAppApp.swift */,
+			);
+			path = "ShapesWatchApp Watch App";
+			sourceTree = "<group>";
+		};
 		8475650B21EFCC4A0094ED94 = {
 			isa = PBXGroup;
 			children = (
 				8475651621EFCC4A0094ED94 /* ApproovShapes */,
-				17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */,
+				17D1FFD92CB1A15500F0B8A6 /* ShapesWatchApp Watch App */,
 				8475651521EFCC4A0094ED94 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,9 +171,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				17D1FF572CAEB6A100F0B8A6 /* ShapesWatchApp Watch App */,
 			);
 			name = "ShapesWatchApp Watch App";
 			packageProductDependencies = (
@@ -231,6 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D1FFDA2CB1A15500F0B8A6 /* Preview Assets.xcassets in Resources */,
+				17D1FFDB2CB1A15500F0B8A6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +273,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D1FFDC2CB1A15500F0B8A6 /* ContentView.swift in Sources */,
+				17D1FFDD2CB1A15500F0B8A6 /* ShapesWatchAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
