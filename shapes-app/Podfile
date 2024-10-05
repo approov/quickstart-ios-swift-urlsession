@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '11.0'
+
+# Define the main target for the iOS app
+target 'ApproovShapes' do
+  use_frameworks!
+  platform :ios, '11.0'
+  # Use the local Podspec for the ApproovURLSession
+  pod 'ApproovURLSession', :path => '/Users/ivol/Github/approov-service-urlsession/ApproovURLSession.podspec'
+  pod 'Approov', :path => '/Users/ivol/Github/approov-ios-sdk/Approov.podspec'
+end
+
+# Define the target for the watchOS app
+target 'ShapesWatchApp Watch App' do
+  use_frameworks!
+  platform :watchos, '7.0'
+  # Use the local Podspec for the ApproovURLSession
+  pod 'ApproovURLSession', :path => '/Users/ivol/Github/approov-service-urlsession/ApproovURLSession.podspec'
+  pod 'Approov', :path => '/Users/ivol/Github/approov-ios-sdk/Approov.podspec'
+end
+

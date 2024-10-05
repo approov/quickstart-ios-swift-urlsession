@@ -1,6 +1,6 @@
-# Approov Quickstart: iOS Swift URLSession
+# Approov Quickstart: iOS and watchOS Swift URLSession
 
-This quickstart is written specifically for native iOS apps that are written in Swift and making API calls using [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) that you wish to protect with Approov. If this is not your situation then check if there is a more relevant quickstart guide available.
+This quickstart is written specifically for native iOS and watchOS apps that are written in Swift and making API calls using [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) that you wish to protect with Approov. If this is not your situation then check if there is a more relevant quickstart guide available.
 
 This page provides all the steps for integrating Approov into your app. Additionally, a step-by-step tutorial guide using our [Shapes App Example](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SHAPES-EXAMPLE.md) is also available which provides an iOS and watchOS applications.
 
@@ -16,6 +16,8 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter a specific option you require or use the latest available `tag`, which should be selected for you.
 
 Once you click `Add Package` the last step will confirm the package product and target selection. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
+
+Alternatively, use `cocoapods` and add the package dependecies similar to how they are used in the example `shapes-app/Podfile` in this repository.
 
 ## USING APPROOV SERVICE
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional Approov attestation calls. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` construction calls with `ApproovURLSession`. 
