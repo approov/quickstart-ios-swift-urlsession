@@ -6,8 +6,9 @@ target 'ApproovShapes' do
   use_frameworks!
   platform :ios, '11.0'
   # Use the local Podspec for the ApproovURLSession
-  pod 'ApproovURLSession', :url => 'https://github.com/approov/approov-service-urlsession/ApproovURLSession.podspec'
-  pod 'Approov', :url => 'https://github.com/approov/approov-ios-sdk/Approov.podspec'
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.2.7'
+  pod 'Approov', :git => 'https://github.com/approov/approov-ios-sdk.git', :tag => '3.2.4'
+  
 end
 
 # Define the target for the watchOS app
@@ -15,7 +16,7 @@ target 'ShapesWatchApp Watch App' do
   use_frameworks!
   platform :watchos, '7.0'
   # Use the local Podspec for the ApproovURLSession
-  pod 'ApproovURLSession', :url => 'https://github.com/approov/approov-service-urlsession/ApproovURLSession.podspec'
-  pod 'Approov', :url => 'https://github.com/approov/approov-ios-sdk/Approov.podspec'
-end
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.2.7'
+  pod 'Approov', :git => 'https://github.com/approov/approov-ios-sdk.git', :tag => '3.2.4'
 
+end
