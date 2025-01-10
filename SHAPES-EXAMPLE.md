@@ -49,7 +49,7 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Packag Dependency](readme-images/AddPackage.png)
 
-Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.2.7`.
+Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.3.0`.
 
 Once you click `Add Package` the last step will confirm the package product and target selection. Please, make sure you select a library for each one of your targets:
 
