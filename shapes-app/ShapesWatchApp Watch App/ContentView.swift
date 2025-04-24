@@ -19,6 +19,8 @@ var defaultSession = URLSession(configuration: .default)
 let currentShapesEndpoint = "v1"
 //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
 //let currentShapesEndpoint = "v3"
+//*** UNCOMMENT THE LINE BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+//let currentShapesEndpoint = "v5"
 
 //*** COMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
 let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
@@ -29,7 +31,10 @@ let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
 // The hello url
 let helloURL = URL(string: "https://shapes.approov.io/v1/hello")
 
-// The shapes endpoint: /v1/ is unprotected and /v3/ uses protection with Approov
+// The shapes endpoint:
+//     /v1/ is unprotected
+//     /v3/ uses protection with Approov
+//     /v5/ additionally uses installation message signing
 let shapesURL = URL(string: "https://shapes.approov.io/" + currentShapesEndpoint + "/shapes")!
 
 struct ContentView: View {
@@ -40,6 +45,11 @@ struct ContentView: View {
         //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
         //try! ApproovService.initialize(config: "<enter-your-config-string-here>")
         
+        //*** UNCOMMENT THE LINES BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+        //ApproovService.setApproovInterceptorExtensions(
+        //    ApproovDefaultMessageSigning().setDefaultFactory(
+        //        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+
         //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
     }
@@ -201,14 +211,3 @@ struct ContentView: View {
 #Preview {
     ContentView(mImage: "approov", mText: "Get Shape")
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -35,6 +35,9 @@ class ViewController: UIViewController {
     //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
     //let currentShapesEndpoint = "v3"
 
+    //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+    //let currentShapesEndpoint = "v5"
+
     //*** COMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
     let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
     
@@ -46,9 +49,14 @@ class ViewController: UIViewController {
         
         //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
         //try! ApproovService.initialize(config: "<enter-your-config-string-here>")
-        
+
         //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
         //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
+
+        //*** UNCOMMENT THE LINES BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+        //ApproovService.setApproovInterceptorExtensions(
+        //    ApproovDefaultMessageSigning().setDefaultFactory(
+        //        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
     }
 
     override func viewDidAppear(_ animated: Bool) {
