@@ -36,6 +36,33 @@ If it is not possible to download the correct certificate from the portal then i
 
 > **IMPORTANT:** Apps built to run on the iOS simulator are not code signed and thus auto-registration does not work for them. In this case you can consider [forcing a device ID to pass](https://approov.io/docs/latest/approov-usage-documentation/#forcing-a-device-id-to-pass) to get a valid attestation.
 
+## MESSAGE SIGNING
+ We provide [installation message signing](https://approov.io/docs/latest/approov-usage-documentation/#installation-message-signing) as an advanced option for situations where an additional level of integrity assurance is required. You should use this option if you would like to ensure strict message integrity between the client app and the backend API. The key pair for message signing is generated automatically when the SDK is first initialized. The public key is transmitted to the Approov servers to be included in Approov tokens in the `ipk` claim. The private key never leaves the device and is held in secure hardware (e.g. TEE/Secure Enclave) to prevent the key material from being stolen.
+
+ ### Enabling Installation Message Signing
+
+ Installation message signing can be enabled by executing the following command:
+
+ ```shell
+ approov policy -setInstallPubKey on
+ ```
+
+ This causes the public key to be included in any Approov tokens in the `ipk` claim, the presence of which then indicates to the backend that it should expect a valid installation message signature and that this should be verified.
+
+ ### Adding the Message Signature Automatically
+
+ If you are using the `ApproovService` networking stack, then Approov can automatically generate and add the message signature. You should use this method whenever possible. You enable this by making the following call once, after initialization:
+
+ ```swift
+ApproovService.setApproovInterceptorExtensions(
+    ApproovDefaultMessageSigning().setDefaultFactory(
+        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+```
+
+With this interceptor extension in place the Approov networking interceptor computes the request message signature and adds it to the request as required when the app passes attestation.
+
+ You can see a [worked example](https://github.com/approov/quickstart-ios-swift-urlsession/blob/master/SHAPES-EXAMPLE.md#shapes-app-with-installation-message-signing) for the Shapes app.
+
 ## FURTHER OPTIONS
 See [Exploring Other Approov Features](https://approov.io/docs/latest/approov-usage-documentation/#exploring-other-approov-features) for information about additional Approov features you may wish to try.
 
