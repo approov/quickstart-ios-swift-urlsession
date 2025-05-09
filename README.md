@@ -23,20 +23,22 @@ Alternatively, use `cocoapods` and add the package dependencies similar to how t
 The `ApproovURLSession` class mimics the interface of the `URLSession` class provided by Apple but includes an additional Approov attestation calls. The simplest way to use the `ApproovURLSession` class is to find and replace all the `URLSession` construction calls with `ApproovURLSession`. 
 
 ```swift
+import ApproovURLSession
+
 try! ApproovService.initialize("<enter-your-config-string-here>")
 let session = ApproovURLSession(URLSessionConfiguration.default)
 ```
 
 Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before using the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
 
-For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values when using secrets protection.
+For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values and query parameters when using secrets protection.
 
 ## ERROR TYPES
 The `ApproovService` functions may throw specific errors to provide additional information:
 
 * `permanentError` might be due to a feature not enabled using the command line
 * `rejectionError` an attestation has been rejected, the `ARC` and `rejectionReasons` may contain specific device information that would help troubleshooting
-* `networkingError` generaly can be retried since it can be temporary network issue
+* `networkingError` generally can be retried since it can be temporary network issue
 * `pinningError` is a certificate error
 * `configurationError` a configuration feature is disabled or wrongly configured (i.e. attempting to initialize with different config from a previous instantiation) 
 * `initializationFailure` the ApproovService failed to be initialized (subsequent network requests will not be performed)

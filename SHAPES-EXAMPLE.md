@@ -49,7 +49,7 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Package Dependency](readme-images/AddPackage.png)
 
-Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.3.0`.
+Enter the repository `https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.3.0`.
 
 Once you click `Add Package` the last step will confirm the package product and target selection. Please, make sure you select a library for each one of your targets:
 
@@ -179,7 +179,7 @@ ApproovService.setApproovInterceptorExtensions(
 
 ## SHAPES APP WITH SECRETS PROTECTION
 
-This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are still going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key, so please change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
+This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key. Change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
 
 The `apiSecretKey` variable also needs to be changed as follows, removing the actual API key out of the code. Find this line and uncomment it (commenting the previous definition):
 
