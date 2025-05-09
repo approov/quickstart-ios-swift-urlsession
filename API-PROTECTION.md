@@ -82,7 +82,7 @@ The default header name of `Approov-Token` can be changed as follows:
 ApproovService.setApproovHeader(header: "Authorization", prefix: "Bearer ")
 ```
 
-The first assignment changes is the new header name and the second a prefix to be added to the Approov token. This is primarily for integrations where the Approov Token JWT might need to be prefixed with `Bearer`  and passed in the `Authorization` header.
+The first parameter is the new header name and the second a prefix to be added to the Approov token. This is primarily for integrations where the Approov Token JWT might need to be prefixed with `Bearer` and passed in the `Authorization` header.
 
 ### Token Binding
 If want to use [Token Binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) then set the header holding the value to be used for binding as follows:
