@@ -1,0 +1,15 @@
+{
+  "originHash" : "7d37158cbc2a86c26e3252ae40232214ff4c1bc78285745545f8ffcf19adfd97",
+  "pins" : [
+    {
+      "identity" : "swift-http-structured-headers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-structured-headers.git",
+      "state" : {
+        "revision" : "8e769facea6b7d46ea60e5e93635a384fd573480",
+        "version" : "1.2.1"
+      }
+    }
+  ],
+  "version" : 3
+}

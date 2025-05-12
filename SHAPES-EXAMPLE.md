@@ -9,7 +9,7 @@ This quickstart is written specifically for native iOS and watchOS apps that are
 * An iOS mobile device or simulator with iOS 12 or higher or a watchOS device with watchOS 7.0 or higher
 * The contents of this repo
 
-## RUNNING THE SHAPES APP WITHOUT APPROOV
+## RUN THE SHAPES APP WITHOUT APPROOV
 
 Open the `ApproovShapes.xcodeproj` project in the `shapes-app` folder using `File->Open` in Xcode. Ensure the `ApproovShapes` project is selected at the top of Xcode's project explorer panel.
 
@@ -47,9 +47,9 @@ The subsequent steps of this guide show you how to provide better protection, ei
 
 The Approov integration is available via the [`Swift Package Manager`](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). This allows inclusion into the project by simply specifying a dependency in the `File -> Add Packages...` Xcode option if the project is selected:
 
-![Add Packag Dependency](readme-images/AddPackage.png)
+![Add Package Dependency](readme-images/AddPackage.png)
 
-Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.3.0`.
+Enter the repository `https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version`, after which the latest `tag` from the selected repository should be selected. If you would like to use an earlier version, just replace the latest one, but bear in mind that the combined watchOS and iOS support began with version `3.3.0`.
 
 Once you click `Add Package` the last step will confirm the package product and target selection. Please, make sure you select a library for each one of your targets:
 
@@ -143,9 +143,43 @@ If you still don't get a valid shape then there are some things you can try. Rem
 * Also, you can use a debugger and get valid Approov tokens on any device if you [mark the signing certificate as being for development](https://approov.io/docs/latest/approov-usage-documentation/#development-app-signing-certificates).
 * Inspect any exceptions for additional information.
 
+## SHAPES APP WITH INSTALLATION MESSAGE SIGNING
+
+ This section shows how to add message signing as an additional layer of protection in addition to an Approov token.
+
+1. Make sure we are using the `https://shapes.approov.io/v5/shapes/` endpoint of the shapes server. The v5 endpoint performs a message signature check in addition to the Approov token check. Find the following line in `ViewController.swift` and `ContentView.swift` source file and uncomment it to point to `v5` (commenting the previous definition):
+
+```swift
+//*** UNCOMMENT THE LINE BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+let currentShapesEndpoint = "v5"
+```
+
+ 2. Uncomment the message signing setup code in `ViewController.swift` and `ContentView.swift`. This adds an interceptor extension to the ApproovService which adds the message signature to the request automatically.
+
+```swift
+//*** UNCOMMENT THE LINES BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
+ApproovService.setApproovInterceptorExtensions(
+    ApproovDefaultMessageSigning().setDefaultFactory(
+        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+```
+
+ 3. Configure Approov to add the public message signing key to the approov token. This key is used by the v5 endpoint to perform its message signature check.
+
+ ```shell
+ approov policy -setInstallPubKey on
+ ```
+
+ 4. Build and run the app again and press the `Shape` button. You should see this (or another shape):
+
+ <p>
+    <img src="readme-images/shape-approoved.png" width="256" title="Shape Approoved">
+ </p>
+
+ This indicates that in addition to the app obtaining a validly signed Approov token, the message also has a valid signature.
+
 ## SHAPES APP WITH SECRETS PROTECTION
 
-This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are still going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key, so please change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
+This section provides an illustration of an alternative option for Approov protection if you are not able to modify the backend to add an Approov Token check. We are going to be using `https://shapes.approov.io/v1/shapes/` that simply checks for an API key. Change back the code so it points to `https://shapes.approov.io/v1/shapes/`.
 
 The `apiSecretKey` variable also needs to be changed as follows, removing the actual API key out of the code. Find this line and uncomment it (commenting the previous definition):
 
