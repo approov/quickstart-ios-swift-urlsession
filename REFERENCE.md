@@ -29,7 +29,7 @@ The optional `comment` parameter allows to provide further options to the initia
 
  Provide an ApproovDefaultMessageSigning object instantiated as shown below to enable installation message signing:
 
- ```java
+ ```swift
      ApproovService.setApproovInterceptorExtensions(
          new ApproovDefaultMessageSigning().setDefaultFactory(
              ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()));
