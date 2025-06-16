@@ -20,22 +20,22 @@ It is possible to pass an empty `config` string to indicate that no initializati
 
 The optional `comment` parameter allows to provide further options to the initialization. Please refer to the [Approov SDK documentation](https://approov.io/docs/latest/approov-direct-sdk-integration/#sdk-initialization-options) for details.
 
- ## setApproovInterceptorExtensions
- Sets the interceptor extensions callback handler. This facility supports message signing that is independent from the rest of the attestation flow. The default ApproovService layer issues no callbacks. Provide a non-null handler to add functionality to the attestation flow. The configuration used to control installation message signing is passed in the `callbacks` parameter. The behavior of the provided configuration must remain constant while in use by the ApproovService.
+## setApproovInterceptorExtensions
+Sets the interceptor extensions callback handler. This facility supports message signing that is independent from the rest of the attestation flow. The default ApproovService layer issues no callbacks. Provide a non-null handler to add functionality to the attestation flow. The configuration used to control installation message signing is passed in the `callbacks` parameter. The behavior of the provided configuration must remain constant while in use by the ApproovService.
 
- ```swift
- public static func setApproovInterceptorExtensions(_ callbacks: ApproovInterceptorExtensions?)
- ```
+```swift
+public static func setApproovInterceptorExtensions(_ callbacks: ApproovInterceptorExtensions?)
+```
 
- Provide an ApproovDefaultMessageSigning object instantiated as shown below to enable installation message signing:
+Provide an ApproovDefaultMessageSigning object instantiated as shown below to enable installation message signing:
 
- ```swift
-     ApproovService.setApproovInterceptorExtensions(
-         new ApproovDefaultMessageSigning().setDefaultFactory(
-             ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()));
- ```
+```swift
+ApproovService.setApproovInterceptorExtensions(
+    new ApproovDefaultMessageSigning().setDefaultFactory(
+        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+```
 
- Passing `nil` to this method will disable message signing.
+Passing `nil` to this method will disable message signing.
 
 ## setProceedOnNetworkFail
 If `proceedOnNetworkFail` is set to `true` then this indicates that the networking should proceed anyway if it is not possible to obtain an Approov token due to a networking failure. If this is called then the backend API can receive calls without the expected Approov token header being added, or without header substitutions being made. This should only ever be used if there is some particular reason, perhaps due to local network conditions, that you believe that traffic to the Approov cloud service will be particularly problematic.
