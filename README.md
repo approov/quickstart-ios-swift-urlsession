@@ -13,9 +13,11 @@ The Approov integration is available via the [`Swift Package Manager`](https://d
 
 ![Add Package Dependency](readme-images/AddPackage.png)
 
-Enter the repository`https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter a specific option you require or use the latest available `tag`, which should be selected for you.
+Enter the repository `https://github.com/approov/approov-service-urlsession.git` into the search box. You will then have to select the relevant version you wish to use. To do so, select the `Exact Version` option and enter a specific option you require or use the latest available `tag`, which should be selected for you.
 
 Once you click `Add Package` the last step will confirm the package product and target selection. The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
+
+For linking ApproovURLSession dynamically, use the alternative package URL `https://github.com/approov/approov-service-urlsession-dynamic.git` in the *Add Package* dialog's search box instead and proceed as described above. After adding the package, make sure the dynamic framework is bundled with the app and is available at runtime: In your app's project settings, select the target for your app. In the *General* tab, go to the *Frameworks, Libraries, and Embedded Content* section. Next to `ApprooURLSession`, set `Embed & Sign` in the *Embed* column.
 
 Alternatively, use `cocoapods` and add the package dependencies similar to how they are used in the example `shapes-app/Podfile` in this repository.
 

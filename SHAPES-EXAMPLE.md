@@ -57,6 +57,8 @@ Once you click `Add Package` the last step will confirm the package product and 
 
 The `approov-service-urlsession` is actually an open source wrapper layer that allows you to easily use Approov with `URLSession`. This has a further dependency to the closed source [Approov SDK](https://github.com/approov/approov-ios-sdk).
 
+Alternatively, for linking ApproovURLSession dynamically, use the package URL `https://github.com/approov/approov-service-urlsession-dynamic.git` in the *Add Package* dialog's search box instead and proceed as described above. After adding the package, make sure the dynamic framework is bundled with the app and is available at runtime: In your app's project settings, select the target for your app. In the *General* tab, go to the *Frameworks, Libraries, and Embedded Content* section. Next to `ApprooURLSession`, set `Embed & Sign` in the *Embed* column.
+
 ## ENSURE THE SHAPES API IS ADDED
 
 In order for Approov tokens to be generated for `https://shapes.approov.io/v3/shapes` it is necessary to inform Approov about it:
