@@ -6,7 +6,7 @@ This quickstart is written specifically for native iOS and watchOS apps that are
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
 * [Xcode](https://developer.apple.com/xcode/) installed (version 16.0 is used in this guide)
-* An iOS mobile device or simulator with iOS 12 or higher or a watchOS device with watchOS 7.0 or higher
+* An iOS mobile device or simulator with iOS 12 or higher or a watchOS device with watchOS 9.0 or higher
 * The contents of this repo
 
 ## RUN THE SHAPES APP WITHOUT APPROOV

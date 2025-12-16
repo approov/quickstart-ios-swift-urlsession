@@ -193,3 +193,6 @@ public static func fetchCustomJWT(payload: String) throws -> String
 ```
 
 This throws `ApproovError` if there was a problem obtaining the custom JWT. This may require network access so may take some time to complete, and should not be called from the UI thread.
+
+## getLastARC
+Obtains the latest [ARC](https://ext.approov.io/docs/latest/approov-usage-documentation/#attestation-response-code) provided a connection to the Approov servers has been performed; it returns an empty string if there is a network connectivity issue or the account feature has been optionally disabled.

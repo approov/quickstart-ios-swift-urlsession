@@ -6,16 +6,17 @@ source 'https://cdn.cocoapods.org/'
 target 'ApproovShapes' do
   use_frameworks!
   platform :ios, '12.0'
-  # Use the local Podspec for the ApproovURLSession
-  pod 'ApproovURLSession', '~> 3.5.1'
+  # Use the git Podspec for the ApproovURLSession from folder 
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.5'
   
 end
 
 # Define the target for the watchOS app
 target 'ShapesWatchApp Watch App' do
   use_frameworks!
-  platform :watchos, '7.0'
-  # Use the local Podspec for the ApproovURLSession
-  pod 'ApproovURLSession',  '~> 3.5.1'
+  platform :watchos, '9.0'
+  # Use the git Podspec for the ApproovURLSession
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.5'
+
 
 end
