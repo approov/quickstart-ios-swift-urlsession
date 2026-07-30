@@ -54,7 +54,7 @@ If it is not possible to download the correct certificate from the portal then i
  If you are using the `ApproovService` networking stack, then Approov can automatically generate and add the message signature. You should use this method whenever possible. You enable this by making the following call once, after initialization:
 
  ```swift
-ApproovService.setApproovInterceptorExtensions(
+ApproovService.setServiceMutator(
     ApproovDefaultMessageSigning().setDefaultFactory(
         ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
 ```
@@ -70,7 +70,7 @@ See [Exploring Other Approov Features](https://approov.io/docs/latest/approov-us
 You may wish to [set a development key](https://approov.io/docs/latest/approov-usage-documentation/#using-a-development-key) in order to force an app to be passed, if it may be resigned by a different app signing certificate to which you don't have access. Perform the call:
 
 ```swift
-ApproovService.setDevKey(devKey: "uDW9FuLVpL1_4zo1")
+ApproovService.setDevKey("<development-key>")
 ```
 
 See [using a development key](https://approov.io/docs/latest/approov-usage-documentation/#using-a-development-key) to understand how to obtain the development key which is the parameter to the call.
@@ -79,7 +79,7 @@ See [using a development key](https://approov.io/docs/latest/approov-usage-docum
 The default header name of `Approov-Token` can be changed as follows:
 
 ```swift
-ApproovService.setApproovHeader(header: "Authorization", prefix: "Bearer ")
+ApproovService.setApproovHeader("Authorization", prefix: "Bearer ")
 ```
 
 The first parameter is the new header name and the second a prefix to be added to the Approov token. This is primarily for integrations where the Approov Token JWT might need to be prefixed with `Bearer` and passed in the `Authorization` header.
@@ -88,7 +88,7 @@ The first parameter is the new header name and the second a prefix to be added t
 If want to use [Token Binding](https://approov.io/docs/latest/approov-usage-documentation/#token-binding) then set the header holding the value to be used for binding as follows:
 
 ```swift
-ApproovService.setBindingHeader(header: "Authorization")
+ApproovService.setBindingHeader("Authorization")
 ```
 
 In this case it means that the value of `Authorization` holds the token value to be bound. This only needs to be called once. On subsequent requests the value of the specified header is read and its value set as the token binding value. Note that you should select a header whose value does not typically change from request to request, as each change requires a new Approov token to be fetched.
@@ -108,15 +108,13 @@ You may wish to do an early check in your app to present a warning to the user i
 ```swift
 do {
     try ApproovService.precheck()
-} catch ApproovError.rejectionError(let message, let ARC, let rejectionReasons) {
-    // failure due to the attestation being rejected, the ARC and rejectionReasons objects
+} catch ApproovServiceError.rejectionError(let message, let arc, let rejectionReasons) {
+    // failure due to the attestation being rejected, the arc and rejectionReasons objects
     // contain additional information
-} catch ApproovError.networkingError(let message) {
+} catch ApproovServiceError.networkingError(let message) {
     // we are unable to perform the precheck due to network conditions so the request can
     // be retried by the user later
-} catch ApproovError.configurationError(let message) {
-    // feature has not been enabled using the command line tools
-} catch ApproovError.permanentError(let message) {
+} catch ApproovServiceError.permanentError(let message) {
     // we are unable to perform the precheck due to a more permanent error
 } catch {
     // Unexpected error

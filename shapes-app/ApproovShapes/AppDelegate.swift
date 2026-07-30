@@ -15,16 +15,55 @@
 // THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import UIKit
-
+import ApproovService
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Initialize the Approov auto service layer as early as possible in the launch path:
+        // every URLSession-based HTTP client created afterwards is protected automatically —
+        // the rest of the app keeps using plain URLSession with no Approov-specific types.
+        // An empty config string selects bypass mode, so a clean checkout remains runnable.
+        // CI and local simulator/device runs can inject test-only values as launch environment
+        // variables without committing account configuration or development keys.
+        let environment = ProcessInfo.processInfo.environment
+        do {
+            try ApproovService.initialize(environment["APPROOV_CONFIG"] ?? "")
+        } catch {
+            NSLog("Approov initialization failed: \(error.localizedDescription)")
+            return false
+        }
+
+        if let developmentKey = environment["APPROOV_DEV_KEY"], !developmentKey.isEmpty {
+            ApproovService.setDevKey(developmentKey)
+        }
+
+        if environment["APPROOV_ENABLE_MESSAGE_SIGNING"] == "1" {
+            ApproovService.setServiceMutator(
+                ApproovDefaultMessageSigning().setDefaultFactory(
+                    ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+        }
+
+        if environment["APPROOV_ENABLE_SECRET_SUBSTITUTION"] == "1" {
+            ApproovService.addSubstitutionHeader("Api-Key")
+        }
+
+#if DEBUG
+        if environment["APPROOV_LOG_DIAGNOSTICS"] == "1" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                let diagnostics = ApproovService.getInterceptionDiagnostics()
+                NSLog("Approov diagnostics: forwarded=\(diagnostics.requestsForwarded) " +
+                      "pinAllowed=\(diagnostics.pinnedChallengesAllowed) " +
+                      "pinBlocked=\(diagnostics.pinnedChallengesBlocked) " +
+                      "delegated=\(diagnostics.delegatedChallenges)")
+            }
+        }
+#endif
+
         return true
     }
     

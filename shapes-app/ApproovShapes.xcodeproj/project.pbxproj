@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA00000000000000000000FE /* ApproovService in Frameworks */ = {isa = PBXBuildFile; productRef = AA00000000000000000000FD /* ApproovService */; };
 		17D1FF542CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		17D1FFDA2CB1A15500F0B8A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */; };
 		17D1FFDB2CB1A15500F0B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD62CB1A15500F0B8A6 /* Assets.xcassets */; };
@@ -81,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA00000000000000000000FE /* ApproovService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +195,9 @@
 			dependencies = (
 			);
 			name = ApproovShapes;
+			packageProductDependencies = (
+				AA00000000000000000000FD /* ApproovService */,
+			);
 			productName = "shapes-client";
 			productReference = 8475651421EFCC4A0094ED94 /* ApproovShapes.app */;
 			productType = "com.apple.product-type.application";
@@ -229,6 +234,9 @@
 			);
 			mainGroup = 8475650B21EFCC4A0094ED94;
 			productRefGroup = 8475651521EFCC4A0094ED94 /* Products */;
+			packageReferences = (
+				AA00000000000000000000FF /* XCLocalSwiftPackageReference "../../approov-service-ios" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -482,7 +490,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -538,7 +546,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -564,7 +572,7 @@
 					"$(PROJECT_DIR)/ApproovShapes",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ApproovShapes/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -597,7 +605,7 @@
 					"$(PROJECT_DIR)/ApproovShapes",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ApproovShapes/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,6 +623,21 @@
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA00000000000000000000FF /* XCLocalSwiftPackageReference "../../approov-service-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../approov-service-ios;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA00000000000000000000FD /* ApproovService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00000000000000000000FF /* XCLocalSwiftPackageReference "../../approov-service-ios" */;
+			productName = ApproovService;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCConfigurationList section */
 		17D1FF662CAEB6A200F0B8A6 /* Build configuration list for PBXNativeTarget "ShapesWatchApp Watch App" */ = {

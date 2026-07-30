@@ -29,7 +29,7 @@ try! ApproovService.initialize("<enter-your-config-string-here>")
 let session = ApproovURLSession(URLSessionConfiguration.default)
 ```
 
-Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before using the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`).
+Additionally, the Approov SDK wrapper class, `ApproovService` needs to be initialized before using the `ApproovURLSession` object. The `<enter-your-config-string-here>` is a custom string that configures your Approov account access. This will have been provided in your Approov onboarding email (its structure is `#<account-id>#<base64-config>`).
 
 For API domains that are configured to be protected with an Approov token, this adds the `Approov-Token` header and pins the connection. This may also substitute header values and query parameters when using secrets protection.
 

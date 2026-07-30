@@ -23,7 +23,7 @@ let currentShapesEndpoint = "v1"
 //let currentShapesEndpoint = "v5"
 
 //*** COMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
-let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
+let apiSecretKey = "shapes_api_key_placeholder"
 
 //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
 //let apiSecretKey = "shapes_api_key_placeholder"

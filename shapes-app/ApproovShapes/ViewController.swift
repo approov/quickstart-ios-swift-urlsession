@@ -16,51 +16,52 @@
 
 import UIKit
 
-//*** UNCOMMENT THE LINE BELOW FOR APPROOV
-//import ApproovURLSessionPackage
+// Note there is NO Approov import and NO Approov-specific session type here: the app uses a
+// completely standard URLSession. The Approov auto service layer (initialized in AppDelegate)
+// intercepts and protects this traffic automatically.
 
 class ViewController: UIViewController {
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var statusTextView: UILabel!
-    
-    //*** COMMENT THE LINE BELOW IF USING APPROOV
-    var defaultSession = URLSession(configuration: .default)
-    
-    //*** UNCOMMENT THE LINE BELOW FOR APPROOV
-    //var defaultSession = ApproovURLSession(configuration: .default)
-    
-    //*** COMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
-    let currentShapesEndpoint = "v1"
-    
-    //*** UNCOMMENT THE LINE BELOW TO USE APPROOV API PROTECTION
-    //let currentShapesEndpoint = "v3"
 
-    //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
-    //let currentShapesEndpoint = "v5"
+    // a plain URLSession — unchanged when adopting Approov with the auto service layer.
+    // `lazy` matters: with a main storyboard the view controller (and any stored property
+    // initializers) are created BEFORE application(_:didFinishLaunchingWithOptions:) runs, so a
+    // non-lazy session would be built before Approov activation and escape interception.
+    lazy var defaultSession = URLSession(configuration: .default)
 
-    //*** COMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
-    let apiSecretKey = "yXClypapWNHIifHUWmBIyPFAm"
-    
-    //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
-    //let apiSecretKey = "shapes_api_key_placeholder"
-    
+    private let environment = ProcessInfo.processInfo.environment
+    private var didRunAutomaticCheck = false
+
+    // A clean checkout uses the public v1 flow and contains no live key. Instrumented runs can
+    // select v3/v5 and supply either a test API key or the secure-string placeholder at launch.
+    private var currentShapesEndpoint: String {
+        environment["SHAPES_ENDPOINT"] ?? "v1"
+    }
+
+    private var apiSecretKey: String {
+        environment["SHAPES_API_KEY"] ?? "shapes_api_key_placeholder"
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //*** UNCOMMENT THE LINE BELOW TO USE APPROOV
-        //try! ApproovService.initialize(config: "<enter-your-config-string-here>")
-
-        //*** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
-        //ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
-
-        //*** UNCOMMENT THE LINES BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
-        //ApproovService.setServiceMutator(
-        //    ApproovDefaultMessageSigning().setDefaultFactory(
-        //        ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
+        // Approov initialization and configuration live in AppDelegate: it must run before any
+        // URLSession is created so the session's configuration picks up the interception.
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Automation hook for headless testing. "hello" exercises a credential-free smoke path;
+        // "shape" exercises the configured protected endpoint and key/placeholder.
+        guard !didRunAutomaticCheck, let automaticCheck = environment["SHAPES_AUTO_CHECK"] else {
+            return
+        }
+        didRunAutomaticCheck = true
+        if automaticCheck.lowercased() == "shape" {
+            checkShape()
+        } else {
+            checkHello()
+        }
     }
     
     // Check hello endpoint

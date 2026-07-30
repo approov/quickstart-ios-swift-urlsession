@@ -85,7 +85,7 @@ var defaultSession = ApproovURLSession(configuration: .default)
 Now locate and uncomment the line inside the `viewDidLoad` or `init` function that initializes the `ApproovService` and remember to add the `config` parameter. The `approov-service-urlsession` needs a configuration string to identify the account associated with the app. You will have received this in your Approov onboarding email (it will be something like `#123456#K/XPlLtfcwnWkzv99Wj5VmAxo4CrU267J1KlQyoz8Qo=`):
 
 ```swift
-try! ApproovService.initialize(config: "<enter-your-config-string-here>")
+try! ApproovService.initialize("<enter-your-config-string-here>")
 ```
 
 The `ApproovURLSession` class adds the `Approov-Token` header and also applies pinning for the connections to ensure that no Man-in-the-Middle can eavesdrop on any communication being made.
@@ -158,7 +158,7 @@ let currentShapesEndpoint = "v5"
 
 ```swift
 //*** UNCOMMENT THE LINES BELOW FOR APPROOV USING INSTALLATION MESSAGE SIGNING
-ApproovService.setApproovInterceptorExtensions(
+ApproovService.setServiceMutator(
     ApproovDefaultMessageSigning().setDefaultFactory(
         ApproovDefaultMessageSigning.generateDefaultSignatureParametersFactory()))
 ```
@@ -188,10 +188,11 @@ The `apiSecretKey` variable also needs to be changed as follows, removing the ac
 let apiSecretKey = "shapes_api_key_placeholder"
 ```
 
-You must inform Approov that it should map `shapes_api_key_placeholder` to `yXClypapWNHIifHUWmBIyPFAm` (the actual API key) in requests as follows:
+You must inform Approov that it should map `shapes_api_key_placeholder` to the API key
+for your isolated test environment:
 
 ```
-approov secstrings -addKey shapes_api_key_placeholder -predefinedValue yXClypapWNHIifHUWmBIyPFAm
+approov secstrings -addKey shapes_api_key_placeholder -predefinedValue <test-api-key>
 ```
 
 > Note that this command requires an [admin role](https://approov.io/docs/latest/approov-usage-documentation/#account-access-roles).
@@ -200,7 +201,7 @@ Next we need to inform Approov that it needs to substitute the placeholder value
 
 ```swift
 // *** UNCOMMENT THE LINE BELOW FOR APPROOV USING SECRETS PROTECTION
-ApproovService.addSubstitutionHeader(header: "Api-Key", prefix: nil)
+ApproovService.addSubstitutionHeader("Api-Key")
 ```
 
 This processes the headers and replaces in the actual API key as required.
