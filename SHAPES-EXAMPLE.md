@@ -6,7 +6,7 @@ This quickstart is written specifically for native iOS and watchOS apps that are
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
 * [Xcode](https://developer.apple.com/xcode/) installed (version 16.0 is used in this guide)
-* An iOS mobile device or simulator with iOS 12 or higher or a watchOS device with watchOS 9.0 or higher
+* An iOS mobile device or simulator with iOS 15 or higher or a watchOS device with watchOS 9.0 or higher
 * The contents of this repo
 
 ## RUN THE SHAPES APP WITHOUT APPROOV
@@ -97,7 +97,7 @@ Lastly, make sure we are using the Approov protected endpoint for the shapes ser
 let currentShapesEndpoint = "v3"
 ```
 
-> Note that from Xcode 14, the minimum deployment target is iOS 11.0 and you will need to update to this in the general settings to allow compilation.
+> The iOS sample targets iOS 15 or later to match the minimum deployment target supported by Xcode 27, and uses the scene-based lifecycle required when building with the iOS 27 SDK and running on iOS 27. UIKit loads `Main.storyboard` through the scene configuration in `Info.plist`.
 
 ## ADD YOUR SIGNING CERTIFICATE TO APPROOV
 
