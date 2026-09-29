@@ -7,7 +7,7 @@ target 'ApproovShapes' do
   use_frameworks!
   platform :ios, '11.0'
   # Use the git Podspec for the ApproovURLSession from folder 
-  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.7'
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.13'
   
 end
 
@@ -16,7 +16,7 @@ target 'ShapesWatchApp Watch App' do
   use_frameworks!
   platform :watchos, '9.0'
   # Use the git Podspec for the ApproovURLSession
-  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.7'
+  pod 'ApproovURLSession', :git => 'https://github.com/approov/approov-service-urlsession.git', :tag => '3.5.13'
 
 
 end
