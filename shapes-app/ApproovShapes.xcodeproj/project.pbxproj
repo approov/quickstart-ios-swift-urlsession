@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA2700000000000000000001 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2700000000000000000002 /* SceneDelegate.swift */; };
 		17D1FF542CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		17D1FFDA2CB1A15500F0B8A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */; };
 		17D1FFDB2CB1A15500F0B8A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D1FFD62CB1A15500F0B8A6 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA2700000000000000000002 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		17D1FF4E2CAEB6A100F0B8A6 /* ShapesWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapesWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D1FF532CAEB6A100F0B8A6 /* ShapesWatchApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ShapesWatchApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17D1FFD42CB1A15500F0B8A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				8475651721EFCC4A0094ED94 /* AppDelegate.swift */,
+				AA2700000000000000000002 /* SceneDelegate.swift */,
 				846743E621EFD27A00EEE48A /* Assets.xcassets */,
 				8475652321EFCC4B0094ED94 /* Info.plist */,
 				8475652021EFCC4B0094ED94 /* LaunchScreen.storyboard */,
@@ -284,6 +287,7 @@
 			files = (
 				8475651A21EFCC4A0094ED94 /* ViewController.swift in Sources */,
 				8475651821EFCC4A0094ED94 /* AppDelegate.swift in Sources */,
+				AA2700000000000000000001 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +486,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -538,7 +542,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -564,7 +568,7 @@
 					"$(PROJECT_DIR)/ApproovShapes",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ApproovShapes/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -597,7 +601,7 @@
 					"$(PROJECT_DIR)/ApproovShapes",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ApproovShapes/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
